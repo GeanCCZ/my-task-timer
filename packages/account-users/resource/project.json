@@ -1,0 +1,16 @@
+{
+  "name": "account-users-resource",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/account-users/resource/src",
+  "projectType": "library",
+  "tags": ["type:resource"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/account-users/resource/jest.config.ts"
+      }
+    }
+  }
+}

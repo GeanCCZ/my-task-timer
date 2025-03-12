@@ -14,7 +14,17 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@my-task-timer/account-users-data-source": [
+        "packages/account-users/data-source/src/index.ts"
+      ],
+      "@my-task-timer/account-users-domain": [
+        "packages/account-users/domain/src/index.ts"
+      ],
+      "@my-task-timer/account-users-resource": [
+        "packages/account-users/resource/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
