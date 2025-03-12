@@ -23,7 +23,12 @@
       ],
       "@my-task-timer/account-users-resource": [
         "packages/account-users/resource/src/index.ts"
-      ]
+      ],
+      "@my-task-timer/tasks-data-source": [
+        "packages/tasks/data-source/src/index.ts"
+      ],
+      "@my-task-timer/tasks-domain": ["packages/tasks/domain/src/index.ts"],
+      "@my-task-timer/tasks-resource": ["packages/tasks/resource/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

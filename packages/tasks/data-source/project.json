@@ -1,0 +1,26 @@
+{
+  "name": "tasks-data-source",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/tasks/data-source/src",
+  "projectType": "library",
+  "tags": ["type:data"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/tasks/data-source",
+        "main": "packages/tasks/data-source/src/index.ts",
+        "tsConfig": "packages/tasks/data-source/tsconfig.lib.json",
+        "assets": []
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/tasks/data-source/jest.config.ts"
+      }
+    }
+  }
+}

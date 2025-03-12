@@ -1,0 +1,16 @@
+{
+  "name": "tasks-resource",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/tasks/resource/src",
+  "projectType": "library",
+  "tags": ["type:resource"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/tasks/resource/jest.config.ts"
+      }
+    }
+  }
+}
