@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AccountUsersResourceModule } from '@my-task-timer/account-users-resource';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [AccountUsersResourceModule],
 })
-export class AppModule {}
+export class AppModule { }
