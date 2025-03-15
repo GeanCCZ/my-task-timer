@@ -1,9 +1,9 @@
-import { StatusType } from '../enum/task-status.enum';
+import { Status } from "@my-task-timer/shared-interfaces";
 
 export interface Task {
     id: string;
     title: string;
-    status: StatusType;
+    status: Status;
     dueDate: Date;
     createdAt: Date;
     updatedAt: Date;
