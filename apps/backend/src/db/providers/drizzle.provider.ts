@@ -1,23 +1,22 @@
+// src/drizzle/drizzle.provider.ts
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
-import { taskSchema } from "../schemas/task.schema";
-import { userSchema } from "../schemas/user.schema";
 import { ConfigService } from "@nestjs/config";
+import { schema, DatabaseSchema } from "../schemas";
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
 
-export const DrizzleAsyncProvider = 'DrizzleAsyncProvider' as const;
+export const DRIZZLE_PROVIDER = Symbol('DRIZZLE_PROVIDER');
 
-const schema = {
-    tasks: taskSchema,
-    users: userSchema,
-} as const;
+export const createDrizzleProvider = (connectionString: string) => {
+  const pool = new Pool({ connectionString });
+  return drizzle(pool, { schema }) as NodePgDatabase<DatabaseSchema>;
+};
 
-export const drizzleProvider = [{
-    provide: DrizzleAsyncProvider,
-    inject: [ConfigService],
-    useFactory: async (configService: ConfigService) => {
-        const connectionString = configService.get<string>('DATABASE_URL');
-        const pool = new Pool({ connectionString });
-        return drizzle(pool, { schema }) as NodePgDatabase<typeof schema>;
-    }
-}]
+export const DrizzleProvider = {
+  provide: DRIZZLE_PROVIDER,
+  inject: [ConfigService],
+  useFactory: (config: ConfigService) => {
+    const connectionString = config.get<string>('DATABASE_URL');
+    return createDrizzleProvider(connectionString);
+  },
+};
