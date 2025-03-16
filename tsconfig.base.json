@@ -24,8 +24,14 @@
       "@my-task-timer/account-users-resource": [
         "packages/account-users/resource/src/index.ts"
       ],
+      "@my-task-timer/shared-data-source": [
+        "packages/shared/data-source/src/index.ts"
+      ],
       "@my-task-timer/shared-interfaces": [
         "packages/shared/interfaces/src/index.ts"
+      ],
+      "@my-task-timer/shared-resource": [
+        "packages/shared/resource/src/index.ts"
       ],
       "@my-task-timer/tasks-data-source": [
         "packages/tasks/data-source/src/index.ts"
