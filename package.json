@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "nx run-many -t serve"
+    "dev": "nx run-many -t serve",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx ./apps/backend/src/db/providers/migrate.provider.ts",
+    "db:studio": "drizzle-kit studio",
+    "db:push": "drizzle-kit push"
   },
   "private": true,
   "devDependencies": {
@@ -68,6 +72,7 @@
     "pg": "^8.14.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0",
+    "tsx": "^4.19.3",
     "zone.js": "~0.15.0"
   }
 }

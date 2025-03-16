@@ -1,7 +1,12 @@
 import { pgTable, date, numeric, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { userSchema } from "./user.schema";
 import { relations } from "drizzle-orm";
-import { STATUS } from "@my-task-timer/shared-interfaces";
+
+const STATUS = {
+    TODO: 'TODO',
+    IN_PROGRESS: 'IN_PROGRESS',
+    DONE: 'DONE'
+} as const;
 
 const StatusValues = [STATUS.TODO, STATUS.IN_PROGRESS, STATUS.DONE] as const;
 

@@ -1,4 +1,4 @@
-export const STATUS = {
+const STATUS = {
     TODO: 'TODO',
     IN_PROGRESS: 'IN_PROGRESS',
     DONE: 'DONE'
