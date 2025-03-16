@@ -4,6 +4,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nx run-many -t serve",
+    "dev:backend": "nx run backend:serve",
+    "dev:frontend": "nx run frontend:serve",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx ./apps/backend/src/db/providers/migrate.provider.ts",
     "db:studio": "drizzle-kit studio",
@@ -73,6 +75,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0",
     "tsx": "^4.19.3",
+    "zod": "^3.24.2",
     "zone.js": "~0.15.0"
   }
 }
