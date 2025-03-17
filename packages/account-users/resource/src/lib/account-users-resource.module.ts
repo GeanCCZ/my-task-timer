@@ -4,7 +4,7 @@ import {
   AuthRepository,
   SignupUseCase,
 } from '@my-task-timer/account-users-domain';
-import { AuthRepositoryImpl } from '../../../data-source/src/lib/repository/auth.repository.impl';
+import { AuthRepositoryImpl} from '@my-task-timer/account-users-data-source';
 
 @Module({
   controllers: [AuthController, UserController],
@@ -12,6 +12,6 @@ import { AuthRepositoryImpl } from '../../../data-source/src/lib/repository/auth
     SignupUseCase,
     { provide: AuthRepository, useClass: AuthRepositoryImpl },
   ],
-  exports: [],
+  exports: [AuthRepository],
 })
 export class AccountUsersResourceModule {}
