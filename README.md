@@ -150,3 +150,15 @@ TASK {
 |---|---|---|---|
 |`GET`|`/reports/calendar`|Retorna as tarefas organizadas por mês|✅|
 |`GET`|`/reports/activity`|Retorna o gráfico de atividades do usuário|✅|
+
+
+## Próximos Passos
+
+- [x]  Definir entre **Prisma** ou **DrizzleORM**.
+- [ ] Refatorar a tabela de tasks
+- [ ] Ver a necessidade de migrations serem chamadas toda vez que o app roda
+- [ ]  Implementar **Autenticação JWT** com Refresh Token no Redis.
+- [ ] Implementar **Task**
+- [ ] Testes unitários
+- [x]  Estruturar **módulos e serviços** no NestJS.
+- [ ]  Criar protótipos da interface em Angular.
