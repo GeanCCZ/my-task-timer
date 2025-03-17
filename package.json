@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nx run-many -t serve",
-    "dev:backend": "nx run backend:serve",
+    "dev:backend": "nx run backend:serve --watch",
     "dev:frontend": "nx run frontend:serve",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx ./apps/backend/src/db/providers/migrate.provider.ts",

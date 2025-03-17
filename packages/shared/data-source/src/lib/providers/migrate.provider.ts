@@ -14,8 +14,6 @@ const runMigration = async () => {
     console.log('Running migrations...');
     await migrate(db, { migrationsFolder: migrationsPath });
     console.log('Migration completed successfully');
-
-    process.exit(0);
   } catch (error) {
     console.error('Migration failed:', error);
     process.exit(1);
