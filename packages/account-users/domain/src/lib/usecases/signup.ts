@@ -1,11 +1,12 @@
+import { Injectable } from '@nestjs/common';
 import { Usecase } from '@my-task-timer/shared-interfaces';
 import { AuthRepository } from '../repository/auth.repository';
 
+@Injectable()
 export class SignupUseCase implements Usecase<any, any> {
-  constructor(private readonly authrepository: AuthRepository) {}
+  constructor(private readonly authRepository: AuthRepository) {}
 
   async execute(input: any): Promise<any> {
-    const created = await this.authrepository.createOne(input);
-    return created;
+    return await this.authRepository.createOne(input);
   }
 }
