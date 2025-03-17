@@ -2,10 +2,10 @@ import type { Config } from 'drizzle-kit';
 
 export default {
     schema: [
-        "./apps/backend/src/db/schemas/task.schema.ts",
-        "./apps/backend/src/db/schemas/user.schema.ts",
+        "./packages/shared/data-source/src/lib/schemas/task.schema.ts",
+        "./packages/shared/data-source/src/lib/schemas/user.schema.ts",
     ],
-    out: "./apps/backend/src/db/migrations",
+    out: "./packages/shared/data-source/src/lib/migrations",
     dialect: "postgresql",
     dbCredentials: {
         url: process.env.DATABASE_URL!,

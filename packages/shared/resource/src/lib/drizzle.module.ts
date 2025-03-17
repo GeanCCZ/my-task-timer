@@ -1,5 +1,5 @@
 import { Global, Module } from "@nestjs/common";
-import { DRIZZLE_PROVIDER, DrizzleProvider } from "./providers/drizzle.provider";
+import { DRIZZLE_PROVIDER, DrizzleProvider } from "@my-task-timer/shared-data-source";
 
 @Global()
 @Module({
