@@ -4,6 +4,7 @@ export default {
     schema: [
         "./apps/backend/src/db/schemas/task.schema.ts",
         "./apps/backend/src/db/schemas/user.schema.ts",
+        "./apps/backend/src/db/schemas/timeLog.schema.ts",
     ],
     out: "./apps/backend/src/db/migrations",
     dialect: "postgresql",

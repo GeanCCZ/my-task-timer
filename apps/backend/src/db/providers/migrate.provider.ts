@@ -4,7 +4,7 @@ import { createDrizzleProvider } from './drizzle.provider';
 
 const runMigration = async () => {
   try {
-    const connectionString = process.env.DATABASE_URL;
+    const connectionString = process.env[`DATABASE_URL`];
     if (!connectionString) {
       throw new Error('Missing DATABASE_URL environment variable');
     }
@@ -15,7 +15,7 @@ const runMigration = async () => {
     console.log('Running migrations...');
     await migrate(db, { migrationsFolder: migrationsPath });
     console.log('Migration completed successfully');
-    
+
     process.exit(0);
   } catch (error) {
     console.error('Migration failed:', error);

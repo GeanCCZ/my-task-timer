@@ -8,6 +8,20 @@
       "when": 1742135347557,
       "tag": "0000_modern_electro",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1742264626873,
+      "tag": "0001_unusual_beyonder",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1742264881072,
+      "tag": "0002_glorious_dazzler",
+      "breakpoints": true
     }
   ]
 }
