@@ -3,7 +3,7 @@ import { AuthController, UserController } from './controller';
 import {
   AuthRepository,
   SignupUseCase,
-  SignupMapper
+  SignUpMapper
 } from '@my-task-timer/account-users-domain';
 import { AuthRepositoryImpl} from '@my-task-timer/account-users-data-source';
 
@@ -11,7 +11,7 @@ import { AuthRepositoryImpl} from '@my-task-timer/account-users-data-source';
   controllers: [AuthController, UserController],
   providers: [
     SignupUseCase,
-    SignupMapper,
+    SignUpMapper,
     { provide: AuthRepository, useClass: AuthRepositoryImpl },
   ],
   exports: [AuthRepository],

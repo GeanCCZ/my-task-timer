@@ -1,5 +1,5 @@
 import { Body, ClassSerializerInterceptor, Controller, Post, UseInterceptors } from '@nestjs/common';
-import { SignupUseCase, AccountDto } from '@my-task-timer/account-users-domain';
+import { SignupUseCase, SignUpDto } from '@my-task-timer/account-users-domain';
 
 @Controller('authentication')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -12,7 +12,7 @@ export class AuthController {
   }
 
   @Post('signup')
-  async signup(@Body() input: AccountDto) {
+  async signup(@Body() input: SignUpDto) {
     return await this.signUpUsecase.execute(input);
   }
 

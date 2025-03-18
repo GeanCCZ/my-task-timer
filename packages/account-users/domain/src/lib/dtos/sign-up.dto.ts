@@ -1,7 +1,7 @@
 import { Exclude, Expose } from 'class-transformer';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
-export class AccountDto {
+export class SignUpDto {
   @Expose()
   id?: string;
 

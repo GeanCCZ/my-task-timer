@@ -1,10 +1,10 @@
 import { Account } from '../entities/account.entity';
 import { Mapper } from '@my-task-timer/shared-interfaces';
-import { AccountDto } from '../dtos/account.dto';
+import { SignUpDto } from '../dtos/sign-up.dto';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 
-export class SignupMapper implements Mapper<AccountDto, Account> {
-  toDomain(input: AccountDto): Account {
+export class SignUpMapper implements Mapper<SignUpDto, Account> {
+  toDomain(input: SignUpDto): Account {
     return {
       email: input.email,
       username: input.username,
@@ -12,7 +12,7 @@ export class SignupMapper implements Mapper<AccountDto, Account> {
     };
   }
 
-  toPersistence(domain: Account): AccountDto {
+  toPersistence(domain: Account): SignUpDto {
     return {
       id: domain.id,
       email: domain.email,
@@ -21,8 +21,8 @@ export class SignupMapper implements Mapper<AccountDto, Account> {
     };
   }
 
-  toResponse(domain: Account): AccountDto {
-    const accountInstance = plainToInstance(AccountDto, domain);
-    return instanceToPlain(accountInstance) as AccountDto;
+  toResponse(domain: Account): SignUpDto {
+    const accountInstance = plainToInstance(SignUpDto, domain);
+    return instanceToPlain(accountInstance) as SignUpDto;
   }
 }
