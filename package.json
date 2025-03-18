@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nx run-many -t serve",
+    "graph": "nx graph",
     "dev:backend": "nx run backend:serve --watch",
     "dev:frontend": "nx run frontend:serve",
     "db:generate": "drizzle-kit generate",
