@@ -1,8 +1,7 @@
-import { Name } from "../interfaces/name";
+import { BaseEntity } from '@my-task-timer/shared-interfaces';
 
-export interface Account {
-    id: string;
-    name: Name;
-    email: string;
-    password: string;
+export interface Account extends BaseEntity {
+  username: string;
+  email: string;
+  password: string;
 }
