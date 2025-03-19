@@ -1,6 +1,7 @@
 import { pgTable, date, numeric, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { userSchema } from "./user.schema";
 import { relations } from "drizzle-orm";
+import { timeLogSchema } from "./timeLog.schema";
 
 const STATUS = {
     TODO: 'TODO',
@@ -17,16 +18,15 @@ export const taskSchema = pgTable("tasks", {
     dueDate: date("due_date").notNull(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
-    totalTimeSpent: numeric("total_time_spent").notNull(),
-    timerStartedAt: timestamp("timer_started_at"),
     userId: uuid("user_id")
         .notNull()
         .references(() => userSchema.id, { onDelete: "cascade" }),
 });
 
-export const taskRelations = relations(taskSchema, ({ one }) => ({
+export const taskRelations = relations(taskSchema, ({ one, many }) => ({
     user: one(userSchema, {
         fields: [taskSchema.userId],
         references: [userSchema.id],
     }),
+    timeLogs: many(timeLogSchema),
 }));
