@@ -155,7 +155,7 @@ TASK {
 ## Próximos Passos
 
 - [x]  Definir entre **Prisma** ou **DrizzleORM**.
-- [ ] Refatorar a tabela de tasks
+- [x] Refatorar a tabela de tasks
 - [ ] Ver a necessidade de migrations serem chamadas toda vez que o app roda
 - [ ]  Implementar **Autenticação JWT** com Refresh Token no Redis.
 - [ ] Implementar **Task**
