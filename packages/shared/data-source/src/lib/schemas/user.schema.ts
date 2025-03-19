@@ -1,4 +1,4 @@
-import { pgTable, text, uuid, primaryKey } from "drizzle-orm/pg-core";
+import { pgTable, text, uuid } from "drizzle-orm/pg-core";
 import { taskSchema } from "./task.schema";
 import { relations } from "drizzle-orm";
 

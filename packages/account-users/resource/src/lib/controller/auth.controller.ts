@@ -1,26 +1,24 @@
-import { Controller, Post } from "@nestjs/common";
-import { access } from "fs";
+import { Body, Controller, Post } from '@nestjs/common';
+import { SignupUseCase } from '@my-task-timer/account-users-domain';
 
 @Controller('authentication')
 export class AuthController {
+  constructor(private readonly signUpUsecase: SignupUseCase) {}
 
-    constructor() { }
+  @Post()
+  async signIn() {
+    return 'User singed up';
+  }
 
-    @Post()
-    async signIn() {
-        return {
-            accessToken: 'test',
-            refreshToken: 'test',
-        };
-    }
+  @Post('signup')
+  async signup(
+    @Body() input: { email: string; username: string; password: string }
+  ) {
+    return await this.signUpUsecase.execute(input);
+  }
 
-    @Post('signup')
-    async singUp() {
-        return "User singed up";
-    }
-
-    @Post('create-user')
-    async createUser() {
-        return "User created";
-    }
+  @Post('create-user')
+  async createUser() {
+    return 'User created';
+  }
 }
