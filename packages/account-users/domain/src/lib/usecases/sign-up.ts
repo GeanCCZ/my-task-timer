@@ -1,5 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { Usecase } from '@my-task-timer/shared-interfaces';
+import { Injectable, Inject } from '@nestjs/common';
+import {
+  CryptoServiceInterface,
+  Usecase,
+} from '@my-task-timer/shared-interfaces';
 import { AuthRepository } from '../repository/auth.repository';
 import { SignUpDto } from '../dtos/sign-up.dto';
 import { SignUpMapper } from '../mappers/sign-up.mapper';
@@ -8,11 +11,19 @@ import { SignUpMapper } from '../mappers/sign-up.mapper';
 export class SignupUseCase implements Usecase<SignUpDto, SignUpDto> {
   constructor(
     private readonly authRepository: AuthRepository,
-    private readonly signUpMapper: SignUpMapper
+    private readonly signUpMapper: SignUpMapper,
+    @Inject('CryptoServiceInterface')
+    private readonly cryptoService: CryptoServiceInterface
   ) {}
 
   async execute(input: SignUpDto): Promise<SignUpDto> {
-    const accountDomain = this.signUpMapper.toDomain(input);
+    const hashedPassword = await this.cryptoService.hashPassword(
+      input.password
+    );
+
+    const domainInput = { ...input, password: hashedPassword };
+
+    const accountDomain = this.signUpMapper.toDomain(domainInput);
     const createdAccount = await this.authRepository.createOne(accountDomain);
     return this.signUpMapper.toResponse(createdAccount);
   }
