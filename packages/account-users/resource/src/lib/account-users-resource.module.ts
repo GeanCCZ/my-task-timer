@@ -4,7 +4,7 @@ import {
   AuthRepository,
   SignupUseCase,
   SignUpMapper,
-  BcryptService,
+  CryptoService,
 } from '@my-task-timer/account-users-domain';
 import { AuthRepositoryImpl } from '@my-task-timer/account-users-data-source';
 import { CryptoServiceInterface} from '@my-task-timer/shared-interfaces';
@@ -14,7 +14,7 @@ import { CryptoServiceInterface} from '@my-task-timer/shared-interfaces';
   providers: [
     SignupUseCase,
     SignUpMapper,
-    { provide: 'CryptoServiceInterface', useClass: BcryptService },
+    { provide: 'CryptoServiceInterface', useClass: CryptoService },
     { provide: AuthRepository, useClass: AuthRepositoryImpl },
   ],
   exports: [AuthRepository],

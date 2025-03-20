@@ -4,7 +4,7 @@ import { SignUpDto } from '../dtos/sign-up.dto';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 
 export class SignUpMapper implements Mapper<SignUpDto, Account> {
-  toDomain(input: SignUpDto): Account {
+  toEntity(input: SignUpDto): Account {
     return {
       email: input.email,
       username: input.username,
@@ -12,7 +12,7 @@ export class SignUpMapper implements Mapper<SignUpDto, Account> {
     };
   }
 
-  toPersistence(domain: Account): SignUpDto {
+  toDto(domain: Account): SignUpDto {
     return {
       id: domain.id,
       email: domain.email,
