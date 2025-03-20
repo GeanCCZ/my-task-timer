@@ -104,7 +104,19 @@ TASK {
   createdAt: Date;
   updatedAt: Date;
   totalTimeSpent: number;
-  timerStartedAt: Date;
+  timeLogs: TimeLog[];
+}
+```
+
+### **Registro de tempo (TimeLog)**
+
+```typescript
+TimeLog {
+  id: string;
+  startedAt: Date;
+  endedAt: Date;
+  timeSpent: number;
+  taskId: strinh;
 }
 ```
 
