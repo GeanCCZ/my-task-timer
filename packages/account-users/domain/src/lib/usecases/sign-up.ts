@@ -12,7 +12,7 @@ export class SignupUseCase implements Usecase<SignUpDto, SignUpDto> {
   ) {}
 
   async execute(input: SignUpDto): Promise<SignUpDto> {
-    const accountDomain = this.signUpMapper.toDomain(input);
+    const accountDomain = this.signUpMapper.toEntity(input);
     const createdAccount = await this.authRepository.createOne(accountDomain);
     return this.signUpMapper.toResponse(createdAccount);
   }

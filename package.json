@@ -8,7 +8,7 @@
     "dev:backend": "nx run backend:serve --watch",
     "dev:frontend": "nx run frontend:serve",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx ./apps/backend/src/db/providers/migrate.provider.ts",
+    "db:migrate": "tsx ./packages/shared/data-source/src/lib/providers/migrate.provider.ts",
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
     "db:drop": "drizzle-kit drop"
