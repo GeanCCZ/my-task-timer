@@ -1,0 +1,19 @@
+meta {
+  name: test SignIn
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/authentication/signup
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "oi01@gmail.com",
+    "username": "teste",
+    "password": "teste123456"
+  }
+}
