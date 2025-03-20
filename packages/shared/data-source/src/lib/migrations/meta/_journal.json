@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1742480141900,
-      "tag": "0000_overrated_cerise",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1742264626873,
-      "tag": "0001_unusual_beyonder",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1742264881072,
-      "tag": "0002_glorious_dazzler",
+      "when": 1742480743624,
+      "tag": "0000_lovely_tag",
       "breakpoints": true
     }
   ]
