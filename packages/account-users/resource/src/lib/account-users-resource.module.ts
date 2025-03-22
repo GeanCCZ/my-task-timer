@@ -7,6 +7,8 @@ import {
   CryptoService,
   JwtTokenService,
   SignInUseCase,
+  AccessTokenStrategy,
+  RefreshTokenStrategy,
 } from '@my-task-timer/account-users-domain';
 import { AuthRepositoryImpl } from '@my-task-timer/account-users-data-source';
 import { JwtModule } from '@nestjs/jwt';
@@ -19,6 +21,8 @@ import { JwtModule } from '@nestjs/jwt';
     SignupUseCase,
     SignUpMapper,
     JwtTokenService,
+    AccessTokenStrategy,
+    RefreshTokenStrategy,
     { provide: 'CryptoServiceInterface', useClass: CryptoService },
     { provide: AuthRepository, useClass: AuthRepositoryImpl },
   ],

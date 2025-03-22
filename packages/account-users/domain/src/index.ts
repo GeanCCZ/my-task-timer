@@ -8,3 +8,5 @@ export * from './lib/dtos/auth-token.dto';
 export * from './lib/mappers/sign-up.mapper';
 export * from './lib/service/crypto.service';
 export * from './lib/service/jwt-token.service';
+export * from './lib/strategies/access-token.strategy';
+export * from './lib/strategies/refresh-token.strategy';
