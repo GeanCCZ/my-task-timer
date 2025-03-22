@@ -12,6 +12,7 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Delete,
+  Get,
   Param,
   Patch,
   Post,
@@ -47,10 +48,12 @@ export class TaskController {
     return await this.deleteTaskUseCase.execute(id);
   }
 
+  @Get()
   async findAllTasks() {
     return await this.findAllTasksUseCase.execute();
   }
 
+  @Get(':id')
   async findTaskById(@Param('id') id: keyof Task) {
     return await this.findTaskByIdUseCase.execute(id);
   }

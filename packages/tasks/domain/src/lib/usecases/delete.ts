@@ -6,14 +6,14 @@ import { TaskMapper } from '../mappers/task.mapper';
 import { Task } from '../entities/task.entity';
 
 @Injectable()
-export class DeleteTaskUseCase implements Usecase<keyof Task, Task> {
+export class DeleteTaskUseCase implements Usecase<keyof Task, void> {
   constructor(
     private readonly taskRepository: TaskRepository,
     private readonly taskMapper: TaskMapper
-  ) {}
+  ) { }
 
   async execute(input: keyof Task) {
-    const deletedTask = await this.taskRepository.deleteOne(input);
-    return this.taskMapper.toResponse(deletedTask);
+    await this.taskRepository.deleteOne(input);
+    return;
   }
 }

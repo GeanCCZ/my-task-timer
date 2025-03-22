@@ -3,6 +3,9 @@ import { Expose } from 'class-transformer';
 import { IsNotEmpty, IsDateString } from 'class-validator';
 
 export class CreateTaskDto {
+
+  @Expose()
+  @IsNotEmpty({ message: 'O usuário da tarefa é obrigatório.' })
   user!: Account;
 
   @Expose()

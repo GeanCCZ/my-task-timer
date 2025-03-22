@@ -12,10 +12,10 @@ import { ResponseTaskDto } from '../dtos/response.task.dto';
 export abstract class TaskRepository
   implements
   Create<Task, Task>,
-  FindOne<Task, keyof Task, Task>,
-  Delete<Task, keyof Task, Task>,
   Update<Task, keyof Task, Task>,
-  FindAll<Task> {
+  FindOne<Task, keyof Task, Task>,
+  FindAll<Task>,
+  Delete<Task, keyof Task, void> {
   abstract createOne(input: Task): Promise<ResponseTaskDto>;
 
   abstract updateOne(
@@ -23,7 +23,7 @@ export abstract class TaskRepository
     input: Task
   ): Promise<Task>;
 
-  abstract deleteOne(id: keyof Task): Promise<ResponseTaskDto>;
+  abstract deleteOne(id: keyof Task): Promise<void>;
 
   abstract findOne(id: keyof Task): Promise<ResponseTaskDto>;
 
