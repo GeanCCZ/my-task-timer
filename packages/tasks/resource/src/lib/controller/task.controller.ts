@@ -3,6 +3,7 @@ import {
   DeleteTaskUseCase,
   FindAllTasksUseCase,
   FindTaskByIdUseCase,
+  Task,
   UpdateTaskUseCase,
 } from '@my-task-timer/tasks-domain';
 
@@ -18,7 +19,7 @@ import {
 } from '@nestjs/common';
 
 import { CreateTaskDto } from 'packages/tasks/domain/src/lib/dtos/create.task.dto';
-import { UpdateTaskDto } from 'packages/tasks/domain/src/lib/dtos/update.task.dti';
+import { UpdateTaskDto } from 'packages/tasks/domain/src/lib/dtos/update.task.dto';
 
 @Controller('tasks')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -29,7 +30,7 @@ export class TaskController {
     private readonly findAllTasksUseCase: FindAllTasksUseCase,
     private readonly findTaskByIdUseCase: FindTaskByIdUseCase,
     private readonly deleteTaskUseCase: DeleteTaskUseCase
-  ) {}
+  ) { }
 
   @Post()
   async createTask(@Body() input: CreateTaskDto) {
@@ -42,7 +43,7 @@ export class TaskController {
   }
 
   @Delete(':id')
-  async deleteTask(@Param('id') id: string) {
+  async deleteTask(@Param('id') id: keyof Task) {
     return await this.deleteTaskUseCase.execute(id);
   }
 
@@ -50,7 +51,7 @@ export class TaskController {
     return await this.findAllTasksUseCase.execute();
   }
 
-  async findTaskById(@Param('id') id: string) {
-    return await this.findTaskByIdUseCase.execute({ id });
+  async findTaskById(@Param('id') id: keyof Task) {
+    return await this.findTaskByIdUseCase.execute(id);
   }
 }

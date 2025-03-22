@@ -10,13 +10,12 @@ import { ResponseTaskDto } from '../dtos/response.task.dto';
 
 @Injectable()
 export class UpdateTaskUseCase
-  implements Usecase<UpdateTaskDto, ResponseTaskDto>
-{
+  implements Usecase<UpdateTaskDto, ResponseTaskDto> {
   constructor(
     private readonly taskRepository: TaskRepository,
     private readonly findTaskByIdUseCase: FindTaskByIdUseCase,
     private readonly askMapper: TaskMapper
-  ) {}
+  ) { }
 
   async execute(input: UpdateTaskDto): Promise<ResponseTaskDto> {
     const findedTask = await this.findTaskByIdUseCase.execute(

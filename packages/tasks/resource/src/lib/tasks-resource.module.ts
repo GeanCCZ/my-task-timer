@@ -5,6 +5,7 @@ import {
   DeleteTaskUseCase,
   FindAllTasksUseCase,
   FindTaskByIdUseCase,
+  TaskMapper,
   UpdateTaskUseCase,
 } from '@my-task-timer/tasks-domain';
 import { TaskRepository } from 'packages/tasks/domain/src/lib/repository/task.repository';
@@ -18,8 +19,9 @@ import { TaskRepositoryImpl } from '@my-task-timer/tasks-data-source';
     DeleteTaskUseCase,
     FindAllTasksUseCase,
     FindTaskByIdUseCase,
+    TaskMapper,
     { provide: TaskRepository, useClass: TaskRepositoryImpl },
   ],
   exports: [TaskRepository],
 })
-export class TasksResourceModule {}
+export class TasksResourceModule { }

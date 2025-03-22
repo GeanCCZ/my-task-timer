@@ -28,5 +28,5 @@ export class ResponseTaskDto {
   userId!: string;
 
   @Exclude()
-  user?: Account | undefined;
+  user?: Account;
 }

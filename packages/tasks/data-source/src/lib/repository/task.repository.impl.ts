@@ -7,20 +7,20 @@ import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 export class TaskRepositoryImpl implements TaskRepository {
   constructor(
     @Inject(DRIZZLE_PROVIDER) private readonly db: NodePgDatabase<typeof schema>
-  ) {}
+  ) { }
 
-  async createOne(input: Task) {
+  async createOne(input: Task): Promise<Task> {
     const { id, ...insertData } = input;
-    const [createTask] = await this.db
+    const [createTask]: Task[] = await this.db
       .insert(schema.tasks)
       .values([insertData])
       .returning();
     return createTask;
   }
 
-  async updateOne(taskId: keyof Task, input: Task) {
+  async updateOne(taskId: keyof Task, input: Task): Promise<Task> {
     const { id, ...updateData } = input;
-    const [updateTask] = await this.db
+    const [updateTask]: Task[] = await this.db
       .update(schema.tasks)
       .set(updateData)
       .where(eq(schema.tasks.id, id))
@@ -29,7 +29,7 @@ export class TaskRepositoryImpl implements TaskRepository {
   }
 
   async deleteOne(id: keyof Task) {
-    const [deleteTask] = await this.db
+    const [deleteTask]: any = await this.db
       .delete(schema.tasks)
       .where(eq(schema.tasks.id, id))
       .returning();
@@ -37,7 +37,7 @@ export class TaskRepositoryImpl implements TaskRepository {
   }
 
   async findOne(id: keyof Task) {
-    const [findOneTask] = await this.db
+    const [findOneTask]: any = await this.db
       .select()
       .from(schema.tasks)
       .where(eq(schema.tasks.id, id));
@@ -45,7 +45,7 @@ export class TaskRepositoryImpl implements TaskRepository {
   }
 
   async findAll() {
-    const tasks = await this.db.select().from(schema.tasks);
-    return tasks.map((task) => task);
+    const tasks: any = await this.db.select().from(schema.tasks);
+    return tasks.map((task: any) => task);
   }
 }

@@ -8,12 +8,11 @@ import { ResponseTaskDto } from '../dtos/response.task.dto';
 
 @Injectable()
 export class CreateTaskUseCase
-  implements Usecase<CreateTaskDto, ResponseTaskDto>
-{
+  implements Usecase<CreateTaskDto, ResponseTaskDto> {
   constructor(
     private readonly taskRepository: TaskRepository,
     private readonly taskMapper: TaskMapper
-  ) {}
+  ) { }
 
   async execute(input: CreateTaskDto): Promise<ResponseTaskDto> {
     const taskDomain: Task = this.taskMapper.toEntity(input) as unknown as Task;
