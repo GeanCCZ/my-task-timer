@@ -11,6 +11,7 @@ import {
   RefreshTokenStrategy,
   FindOneUseCase,
   UserMapper,
+  UpdateUseCase,
 } from '@my-task-timer/account-users-domain';
 import { AuthRepositoryImpl } from '@my-task-timer/account-users-data-source';
 import { JwtModule } from '@nestjs/jwt';
@@ -22,6 +23,7 @@ import { JwtModule } from '@nestjs/jwt';
     SignInUseCase,
     SignUpUseCase,
     FindOneUseCase,
+    UpdateUseCase,
     SignUpMapper,
     UserMapper,
     JwtTokenService,
