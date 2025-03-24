@@ -4,9 +4,7 @@ import { TimeLog } from "../entities/timeLog.entity";
 import { instanceToPlain, plainToInstance } from "class-transformer";
 import { ResponseTimeLogDto } from "../dtos/response.timeLog";
 import { UpdateTimeLogDto } from "../dtos/update.timeLog";
-import { Injectable } from "@nestjs/common";
 
-@Injectable()
 export class TimeLogMapper implements Mapper<CreateTimeLogDto, any> {
 
     toEntity(input: CreateTimeLogDto | UpdateTimeLogDto) {
