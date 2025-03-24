@@ -5,21 +5,24 @@ import {
   Get,
   UseGuards,
   Param,
+  Req,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { FindOneUseCase } from '@my-task-timer/account-users-domain';
-import { AuthGuard } from '@nestjs/passport';
+import { AuthenticatedRequest } from '@my-task-timer/shared-interfaces';
+import { AccessTokenGuard } from '@my-task-timer/shared-resource';
 
 @Controller('users')
+@UseInterceptors(ClassSerializerInterceptor)
 export class UserController {
   constructor(private readonly findOneUseCase: FindOneUseCase) {}
 
+  @UseGuards(AccessTokenGuard)
   @Get()
-  @UseGuards(AuthGuard)
-  async findOne(@Param('id') id: string) {
+  @HttpCode(HttpStatus.OK)
+  async findOne(@Req() req: AuthenticatedRequest) {
+    const id = req.user.userID;
     return await this.findOneUseCase.execute(id);
-  }
-
-  async update() {
-    return {};
   }
 }
