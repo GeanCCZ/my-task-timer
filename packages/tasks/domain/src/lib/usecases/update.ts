@@ -4,7 +4,6 @@ import { UpdateTaskDto } from '../dtos/update.task.dto';
 import { TaskMapper } from '../mappers/task.mapper';
 import { TaskRepository } from '../repository/task.repository';
 import { Task } from '../entities/task.entity';
-import { CreateTaskDto } from '../dtos/create.task.dto';
 import { FindTaskByIdUseCase } from './findById';
 import { ResponseTaskDto } from '../dtos/response.task.dto';
 

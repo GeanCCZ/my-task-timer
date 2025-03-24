@@ -44,3 +44,4 @@ Thumbs.db
 
 .angular
 packages/shared/data-source/src/lib/migrations/meta/
+packages/shared/data-source/src/lib/migrations/meta/_journal.json
