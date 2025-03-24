@@ -1,0 +1,16 @@
+{
+  "name": "time-log-resource",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/time-log/resource/src",
+  "projectType": "library",
+  "tags": ["type:resource"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/time-log/resource/jest.config.ts"
+      }
+    }
+  }
+}
