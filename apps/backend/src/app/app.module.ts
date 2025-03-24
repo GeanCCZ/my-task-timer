@@ -4,6 +4,7 @@ import { DrizzleModule } from '@my-task-timer/shared-resource';
 import { ConfigModule } from '@nestjs/config';
 import { environment } from '../../../../config/config';
 import { TasksResourceModule } from '@my-task-timer/tasks-resource';
+import { TimeLogResourceModule } from '@my-task-timer/time-log-resource';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { TasksResourceModule } from '@my-task-timer/tasks-resource';
     DrizzleModule,
     AccountUsersResourceModule,
     TasksResourceModule,
+    TimeLogResourceModule
   ],
 })
-export class AppModule {}
+export class AppModule { }

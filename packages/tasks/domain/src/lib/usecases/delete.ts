@@ -1,8 +1,7 @@
 import { Usecase } from '@my-task-timer/shared-interfaces';
 import { Injectable } from '@nestjs/common';
-import { CreateTaskDto } from '../dtos/create.task.dto';
 import { TaskRepository } from '../repository/task.repository';
-import { TaskMapper } from '../mappers/task.mapper';
+import { TaskMapper } from '@my-task-timer/tasks-domain';
 import { Task } from '../entities/task.entity';
 
 @Injectable()
