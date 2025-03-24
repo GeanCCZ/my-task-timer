@@ -1,31 +1,25 @@
 import {
-    Controller,
-    HttpCode,
-    HttpStatus,
-    Get,
-    UseGuards,
-    Param,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Get,
+  UseGuards,
+  Param,
 } from '@nestjs/common';
+import { FindOneUseCase } from '@my-task-timer/account-users-domain';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UserController {
-    constructor() { }
+  constructor(private readonly findOneUseCase: FindOneUseCase) {}
 
-    @HttpCode(HttpStatus.OK)
-    @Get()
-    async findAll() {
-        return {
-            name: 'test',
-            email: 'test',
-            password: 'test',
-        };
-    }
+  @Get()
+  @UseGuards(AuthGuard)
+  async findOne(@Param('id') id: string) {
+    return await this.findOneUseCase.execute(id);
+  }
 
-    async findOne(@Param('id') id: string) {
-        return {
-            name: 'test',
-            email: 'test',
-            password: 'test',
-        }
-    }
+  async update() {
+    return {};
+  }
 }

@@ -1,0 +1,22 @@
+meta {
+  name: test guard
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:3000/api/authentication/create-user
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkY2FjOWJmMy0xNzBiLTQxYzUtYWM4OC04NzJjNDNmZTAxMGMiLCJpYXQiOjE3NDI4MjI1MTUsImV4cCI6MTc0MjgyMzQxNX0.Fs922V0S2lOa4eN74HLJbCrz2JhPg3cHb787AHsSFmI
+}
+
+body:json {
+  {
+    "email": "oi01@gmail.com",
+    "password": "teste123456"
+  }
+}

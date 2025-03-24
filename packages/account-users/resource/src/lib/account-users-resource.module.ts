@@ -2,13 +2,14 @@ import { Module } from '@nestjs/common';
 import { AuthController, UserController } from './controller';
 import {
   AuthRepository,
-  SignupUseCase,
+  SignUpUseCase,
   SignUpMapper,
   CryptoService,
   JwtTokenService,
   SignInUseCase,
   AccessTokenStrategy,
   RefreshTokenStrategy,
+  FindOneUseCase,
 } from '@my-task-timer/account-users-domain';
 import { AuthRepositoryImpl } from '@my-task-timer/account-users-data-source';
 import { JwtModule } from '@nestjs/jwt';
@@ -18,7 +19,8 @@ import { JwtModule } from '@nestjs/jwt';
   controllers: [AuthController, UserController],
   providers: [
     SignInUseCase,
-    SignupUseCase,
+    SignUpUseCase,
+    FindOneUseCase,
     SignUpMapper,
     JwtTokenService,
     AccessTokenStrategy,

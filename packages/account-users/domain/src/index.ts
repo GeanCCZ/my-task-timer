@@ -1,6 +1,4 @@
 export * from './lib/repository/auth.repository';
-export * from './lib/usecases/sign-up';
-export * from './lib/usecases/sign-in-use-case.service';
 export * from './lib/entities/account.entity';
 export * from './lib/dtos/sign-up.dto';
 export * from './lib/dtos/sign-in.dto';
@@ -10,3 +8,4 @@ export * from './lib/service/crypto.service';
 export * from './lib/service/jwt-token.service';
 export * from './lib/strategies/access-token.strategy';
 export * from './lib/strategies/refresh-token.strategy';
+export * from './lib/usecases';

@@ -3,21 +3,24 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Post,
+  Req,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import {
-  SignupUseCase,
+  SignUpUseCase,
   SignUpDto,
   SignInUseCase,
   SignInDto,
 } from '@my-task-timer/account-users-domain';
-import { input } from 'zod';
+import { AccessTokenGuard } from '@my-task-timer/shared-resource';
+import { AuthenticatedRequest } from '@my-task-timer/shared-interfaces';
 
 @Controller('authentication')
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
   constructor(
-    private readonly signUpUsecase: SignupUseCase,
+    private readonly signUpUsecase: SignUpUseCase,
     private readonly signInUsecase: SignInUseCase
   ) {}
 
@@ -31,8 +34,10 @@ export class AuthController {
     return await this.signUpUsecase.execute(input);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Post('create-user')
-  async createUser() {
-    return 'User created';
+  async createUser(@Req() req: AuthenticatedRequest) {
+    const id = req.user.userID;
+    return id;
   }
 }
