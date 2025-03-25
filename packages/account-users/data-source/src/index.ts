@@ -1,1 +1,1 @@
-export * from './lib/repository/auth.repository.impl'
+export * from './lib/repository/account.repository.impl'

@@ -1,5 +1,5 @@
 export interface Mapper<T, R> {
-  toDomain(input: T): R;
+  toEntity(input: T): R;
 
-  toPersistence(domain: R): T;
+  toDto(domain: R): T;
 }

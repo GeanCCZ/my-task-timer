@@ -1,11 +1,11 @@
 meta {
-  name: test SignUp
+  name: test SignIn
   type: http
-  seq: 2
+  seq: 3
 }
 
 post {
-  url: http://localhost:3000/api/authentication/signup
+  url: http://localhost:3000/api/authentication
   body: json
   auth: none
 }
@@ -13,7 +13,6 @@ post {
 body:json {
   {
     "email": "oi01@gmail.com",
-    "username": "teste",
     "password": "teste123456"
   }
 }
