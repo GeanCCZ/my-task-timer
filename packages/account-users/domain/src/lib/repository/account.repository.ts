@@ -1,7 +1,7 @@
 import { Create, FindOne, Update } from '@my-task-timer/shared-interfaces';
 import { Account } from '../entities/account.entity';
 
-export abstract class AuthRepository
+export abstract class AccountRepository
   implements
     Create<Account, Account>,
     FindOne<Account, 'id', Account>,

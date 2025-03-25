@@ -1,4 +1,4 @@
-export * from './lib/repository/auth.repository';
+export * from './lib/repository/account.repository';
 export * from './lib/entities/account.entity';
 export * from './lib/dtos/sign-up.dto';
 export * from './lib/dtos/sign-in.dto';

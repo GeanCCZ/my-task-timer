@@ -1,13 +1,13 @@
 import { Usecase } from '@my-task-timer/shared-interfaces';
 import { UserDto } from '../dtos/user.dto';
-import { AuthRepository } from '../repository/auth.repository';
+import { AccountRepository } from '../repository/account.repository';
 import { Injectable } from '@nestjs/common';
 import { UserMapper } from '../mappers/user.mapper';
 
 @Injectable()
 export class FindOneUseCase implements Usecase<string, UserDto> {
   constructor(
-    private readonly authRepository: AuthRepository,
+    private readonly authRepository: AccountRepository,
     private readonly userMapper: UserMapper
   ) {}
 

@@ -1,10 +1,10 @@
-import { Account, AuthRepository } from '@my-task-timer/account-users-domain';
+import { Account, AccountRepository } from '@my-task-timer/account-users-domain';
 import { DRIZZLE_PROVIDER, schema } from '@my-task-timer/shared-data-source';
 import { Inject } from '@nestjs/common';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { ilike, or, eq } from 'drizzle-orm';
 
-export class AuthRepositoryImpl implements AuthRepository {
+export class AccountRepositoryImpl implements AccountRepository {
   constructor(
     @Inject(DRIZZLE_PROVIDER) private readonly db: NodePgDatabase<typeof schema>
   ) {}

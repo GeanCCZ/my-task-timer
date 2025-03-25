@@ -5,13 +5,13 @@ import {
 } from '@my-task-timer/shared-interfaces';
 import { SignInDto } from '../dtos/sign-in.dto';
 import { AuthTokensDto } from '../dtos/auth-token.dto';
-import { AuthRepository } from '../repository/auth.repository';
+import { AccountRepository } from '../repository/account.repository';
 import { JwtTokenService } from '../service/jwt-token.service';
 
 @Injectable()
 export class SignInUseCase implements Usecase<SignInDto, AuthTokensDto> {
   constructor(
-    private readonly authRepository: AuthRepository,
+    private readonly authRepository: AccountRepository,
     @Inject('CryptoServiceInterface')
     private readonly crypto: CryptoServiceInterface,
     private readonly jwtTokenService: JwtTokenService

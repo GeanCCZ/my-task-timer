@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AuthController, UserController } from './controller';
 import {
-  AuthRepository,
+  AccountRepository,
   SignUpUseCase,
   SignUpMapper,
   CryptoService,
@@ -13,7 +13,7 @@ import {
   UserMapper,
   UpdateUseCase,
 } from '@my-task-timer/account-users-domain';
-import { AuthRepositoryImpl } from '@my-task-timer/account-users-data-source';
+import { AccountRepositoryImpl } from '@my-task-timer/account-users-data-source';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
@@ -30,8 +30,8 @@ import { JwtModule } from '@nestjs/jwt';
     AccessTokenStrategy,
     RefreshTokenStrategy,
     { provide: 'CryptoServiceInterface', useClass: CryptoService },
-    { provide: AuthRepository, useClass: AuthRepositoryImpl },
+    { provide: AccountRepository, useClass: AccountRepositoryImpl },
   ],
-  exports: [AuthRepository],
+  exports: [AccountRepository],
 })
 export class AccountUsersResourceModule {}

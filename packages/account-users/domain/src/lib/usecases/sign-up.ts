@@ -3,14 +3,14 @@ import {
   CryptoServiceInterface,
   Usecase,
 } from '@my-task-timer/shared-interfaces';
-import { AuthRepository } from '../repository/auth.repository';
+import { AccountRepository } from '../repository/account.repository';
 import { SignUpDto } from '../dtos/sign-up.dto';
 import { SignUpMapper } from '../mappers/sign-up.mapper';
 
 @Injectable()
 export class SignUpUseCase implements Usecase<SignUpDto, SignUpDto> {
   constructor(
-    private readonly authRepository: AuthRepository,
+    private readonly authRepository: AccountRepository,
     private readonly signUpMapper: SignUpMapper,
     @Inject('CryptoServiceInterface')
     private readonly cryptoService: CryptoServiceInterface
