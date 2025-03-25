@@ -1,4 +1,7 @@
-import { Account, AccountRepository } from '@my-task-timer/account-users-domain';
+import {
+  Account,
+  AccountRepository,
+} from '@my-task-timer/account-users-domain';
 import { DRIZZLE_PROVIDER, schema } from '@my-task-timer/shared-data-source';
 import { Inject } from '@nestjs/common';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
@@ -58,5 +61,10 @@ export class AccountRepositoryImpl implements AccountRepository {
     return this.db.query.users.findFirst({
       where: or(...conditions),
     }) as Promise<Account>;
+  }
+
+  async deleteOne(id: string): Promise<string> {
+    await this.db.delete(schema.users).where(eq(schema.users.id, id)).execute();
+    return 'User removed successfully';
   }
 }
