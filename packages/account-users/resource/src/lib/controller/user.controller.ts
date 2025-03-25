@@ -10,8 +10,10 @@ import {
   ClassSerializerInterceptor,
   Put,
   Body,
+  Delete,
 } from '@nestjs/common';
 import {
+  DeleteUseCase,
   FindOneUseCase,
   UpdateUseCase,
   UserDto,
@@ -24,7 +26,8 @@ import { AccessTokenGuard } from '@my-task-timer/shared-resource';
 export class UserController {
   constructor(
     private readonly findOneUseCase: FindOneUseCase,
-    private readonly updateUseCase: UpdateUseCase
+    private readonly updateUseCase: UpdateUseCase,
+    private readonly deleteUseCase: DeleteUseCase
   ) {}
 
   @UseGuards(AccessTokenGuard)
@@ -36,9 +39,16 @@ export class UserController {
   }
 
   @UseGuards(AccessTokenGuard)
-  @Put('update')
+  @Put()
   async update(@Req() req: AuthenticatedRequest, @Body() input: UserDto) {
     const id = req.user.userID;
     return await this.updateUseCase.execute({ id, input });
+  }
+
+  @UseGuards(AccessTokenGuard)
+  @Delete()
+  async delete(@Req() req: AuthenticatedRequest) {
+    const id = req.user.userID;
+    return await this.deleteUseCase.execute(id);
   }
 }

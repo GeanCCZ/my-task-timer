@@ -11,14 +11,14 @@ import { JwtTokenService } from '../service/jwt-token.service';
 @Injectable()
 export class SignInUseCase implements Usecase<SignInDto, AuthTokensDto> {
   constructor(
-    private readonly authRepository: AccountRepository,
+    private readonly accountRepository: AccountRepository,
     @Inject('CryptoServiceInterface')
     private readonly crypto: CryptoServiceInterface,
     private readonly jwtTokenService: JwtTokenService
   ) {}
 
   async execute(input: SignInDto): Promise<AuthTokensDto> {
-    const user = await this.authRepository.findByEmailOrUsername(
+    const user = await this.accountRepository.findByEmailOrUsername(
       input.email,
       input.username
     );

@@ -7,12 +7,12 @@ import { UserMapper } from '../mappers/user.mapper';
 @Injectable()
 export class FindOneUseCase implements Usecase<string, UserDto> {
   constructor(
-    private readonly authRepository: AccountRepository,
+    private readonly accountRepository: AccountRepository,
     private readonly userMapper: UserMapper
   ) {}
 
   async execute(id: string): Promise<UserDto> {
-    const userDomain = await this.authRepository.findOne(id);
+    const userDomain = await this.accountRepository.findOne(id);
 
     return this.userMapper.toDto(userDomain);
   }

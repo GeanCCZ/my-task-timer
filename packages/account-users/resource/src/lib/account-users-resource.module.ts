@@ -12,6 +12,7 @@ import {
   FindOneUseCase,
   UserMapper,
   UpdateUseCase,
+  DeleteUseCase,
 } from '@my-task-timer/account-users-domain';
 import { AccountRepositoryImpl } from '@my-task-timer/account-users-data-source';
 import { JwtModule } from '@nestjs/jwt';
@@ -24,6 +25,7 @@ import { JwtModule } from '@nestjs/jwt';
     SignUpUseCase,
     FindOneUseCase,
     UpdateUseCase,
+    DeleteUseCase,
     SignUpMapper,
     UserMapper,
     JwtTokenService,

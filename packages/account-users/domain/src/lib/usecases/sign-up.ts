@@ -10,7 +10,7 @@ import { SignUpMapper } from '../mappers/sign-up.mapper';
 @Injectable()
 export class SignUpUseCase implements Usecase<SignUpDto, SignUpDto> {
   constructor(
-    private readonly authRepository: AccountRepository,
+    private readonly accountRepository: AccountRepository,
     private readonly signUpMapper: SignUpMapper,
     @Inject('CryptoServiceInterface')
     private readonly cryptoService: CryptoServiceInterface
@@ -24,7 +24,7 @@ export class SignUpUseCase implements Usecase<SignUpDto, SignUpDto> {
     const domainInput = { ...input, password: hashedPassword };
 
     const accountDomain = this.signUpMapper.toEntity(domainInput);
-    const createdAccount = await this.authRepository.createOne(accountDomain);
+    const createdAccount = await this.accountRepository.createOne(accountDomain);
     return this.signUpMapper.toResponse(createdAccount);
   }
 }

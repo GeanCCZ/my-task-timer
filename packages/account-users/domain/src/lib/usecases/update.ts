@@ -9,7 +9,7 @@ export class UpdateUseCase
   implements Usecase<{ id: string; input: UserDto }, UserDto>
 {
   constructor(
-    private readonly authRepository: AccountRepository,
+    private readonly accountRepository: AccountRepository,
     private userMapper: UserMapper
   ) {}
 
@@ -22,7 +22,7 @@ export class UpdateUseCase
   }): Promise<UserDto> {
     const userInput = this.userMapper.toEntity(input);
 
-    const updatedUser = await this.authRepository.updateOne(id, userInput);
+    const updatedUser = await this.accountRepository.updateOne(id, userInput);
 
     return this.userMapper.toDto(updatedUser);
   }
