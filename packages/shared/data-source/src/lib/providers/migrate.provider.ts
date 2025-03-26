@@ -10,7 +10,10 @@ const runMigration = async () => {
     }
 
     const db = createDrizzleProvider(connectionString);
-    const migrationsPath = path.join(__dirname, '../../../packages/shared/data-source/src/lib/migrations');
+    const migrationsPath = path.join(
+      __dirname,
+      '../../../packages/shared/data-source/src/lib/migrations'
+    );
     console.log('Running migrations...');
     await migrate(db, { migrationsFolder: migrationsPath });
     console.log('Migration completed successfully');
