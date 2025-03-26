@@ -24,7 +24,9 @@ export class SignUpUseCase implements Usecase<SignUpDto, SignUpDto> {
     const domainInput = { ...input, password: hashedPassword };
 
     const accountDomain = this.signUpMapper.toEntity(domainInput);
-    const createdAccount = await this.accountRepository.createOne(accountDomain);
+    const createdAccount = await this.accountRepository.createOne(
+      accountDomain
+    );
     return this.signUpMapper.toResponse(createdAccount);
   }
 }

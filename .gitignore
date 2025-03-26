@@ -43,3 +43,4 @@ Thumbs.db
 .nx/workspace-data
 
 .angular
+packages/shared/data-source/src/lib/migrations/meta/

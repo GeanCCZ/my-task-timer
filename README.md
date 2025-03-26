@@ -1,6 +1,4 @@
-
 ![Logo](https://6t7sm2897i.ufs.sh/f/VCIgGDrhiGZSi594F93QKrVom0xsetjZJWXPNAbfFqz826c3)
-
 
 Um sistema para organização e acompanhamento de tarefas utilizando um **kanban**, **timer**, **calendário mensal** e um **gráfico de atividades** no estilo do GitHub.
 
@@ -103,8 +101,20 @@ TASK {
   dueDate: Date;
   createdAt: Date;
   updatedAt: Date;
-  totalTimeSpent: number;
-  timerStartedAt: Date;
+  totalTimeSpent: string;
+  timeLogs: TimeLog[];
+}
+```
+
+### **Registro de tempo (TimeLog)**
+
+```typescript
+TimeLog {
+  id: string;
+  startedAt: Date;
+  endedAt: Date;
+  timeSpent: number;
+  taskId: strinh;
 }
 ```
 
@@ -114,51 +124,50 @@ TASK {
 
 ### **Autenticação** (`/auth`)
 
-|Método|Endpoint|Descrição|Autenticação|
-|---|---|---|---|
-|`POST`|`/auth/register`|Criação de conta|❌|
-|`POST`|`/auth/login`|Login e obtenção de tokens JWT|❌|
-|`POST`|`/auth/refresh`|Gera novo Access Token|✅ (refresh)|
-|`POST`|`/auth/logout`|Invalida o Refresh Token|✅|
+| Método | Endpoint         | Descrição                      | Autenticação |
+| ------ | ---------------- | ------------------------------ | ------------ |
+| `POST` | `/auth/register` | Criação de conta               | ❌           |
+| `POST` | `/auth/login`    | Login e obtenção de tokens JWT | ❌           |
+| `POST` | `/auth/refresh`  | Gera novo Access Token         | ✅ (refresh) |
+| `POST` | `/auth/logout`   | Invalida o Refresh Token       | ✅           |
 
 ---
 
 ### **Tarefas** (`/tasks`)
 
-|Método|Endpoint|Descrição|Autenticação|
-|---|---|---|---|
-|`POST`|`/tasks`|Criar uma nova tarefa|✅|
-|`GET`|`/tasks`|Listar todas as tarefas do usuário|✅|
-|`GET`|`/tasks/:id`|Buscar detalhes de uma tarefa|✅|
-|`PUT`|`/tasks/:id`|Atualizar uma tarefa|✅|
-|`DELETE`|`/tasks/:id`|Remover uma tarefa|✅|
+| Método   | Endpoint     | Descrição                          | Autenticação |
+| -------- | ------------ | ---------------------------------- | ------------ |
+| `POST`   | `/tasks`     | Criar uma nova tarefa              | ✅           |
+| `GET`    | `/tasks`     | Listar todas as tarefas do usuário | ✅           |
+| `GET`    | `/tasks/:id` | Buscar detalhes de uma tarefa      | ✅           |
+| `PUT`    | `/tasks/:id` | Atualizar uma tarefa               | ✅           |
+| `DELETE` | `/tasks/:id` | Remover uma tarefa                 | ✅           |
 
 ---
 
 ### **Timer** (`/tasks/:id/timer`)
 
-|Método|Endpoint|Descrição|Autenticação|
-|---|---|---|---|
-|`POST`|`/tasks/:id/timer/start`|Iniciar o timer|✅|
-|`POST`|`/tasks/:id/timer/stop`|Parar o timer|✅|
+| Método | Endpoint                 | Descrição       | Autenticação |
+| ------ | ------------------------ | --------------- | ------------ |
+| `POST` | `/tasks/:id/timer/start` | Iniciar o timer | ✅           |
+| `POST` | `/tasks/:id/timer/stop`  | Parar o timer   | ✅           |
 
 ---
 
 ### **Relatórios & Visualização** (`/reports`)
 
-|Método|Endpoint|Descrição|Autenticação|
-|---|---|---|---|
-|`GET`|`/reports/calendar`|Retorna as tarefas organizadas por mês|✅|
-|`GET`|`/reports/activity`|Retorna o gráfico de atividades do usuário|✅|
-
+| Método | Endpoint            | Descrição                                  | Autenticação |
+| ------ | ------------------- | ------------------------------------------ | ------------ |
+| `GET`  | `/reports/calendar` | Retorna as tarefas organizadas por mês     | ✅           |
+| `GET`  | `/reports/activity` | Retorna o gráfico de atividades do usuário | ✅           |
 
 ## Próximos Passos
 
-- [x]  Definir entre **Prisma** ou **DrizzleORM**.
+- [x] Definir entre **Prisma** ou **DrizzleORM**.
 - [x] Refatorar a tabela de tasks
 - [ ] Ver a necessidade de migrations serem chamadas toda vez que o app roda
-- [ ]  Implementar **Autenticação JWT** com Refresh Token no Redis.
+- [ ] Implementar **Autenticação JWT** com Refresh Token no Redis.
 - [ ] Implementar **Task**
 - [ ] Testes unitários
-- [x]  Estruturar **módulos e serviços** no NestJS.
-- [ ]  Criar protótipos da interface em Angular.
+- [x] Estruturar **módulos e serviços** no NestJS.
+- [ ] Criar protótipos da interface em Angular.
