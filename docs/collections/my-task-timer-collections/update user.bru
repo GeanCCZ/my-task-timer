@@ -1,0 +1,22 @@
+meta {
+  name: update user
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:3000/api/users
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4MjFlOTQ5ZC0yOGRjLTQwNDctYThjMC1mYzIwNTc2YzRkNmUiLCJpYXQiOjE3NDMwMTE5MTYsImV4cCI6MTc0MzAxMjgxNn0.jDSwrty14pSi-mXbLpqLnXcoqC1WEu9HsNsNu1IpDDI
+}
+
+body:json {
+  {
+    "email": "oi01@gmail.com",
+    "username": "jack"
+  }
+}
