@@ -1,5 +1,5 @@
 import { Usecase } from '@my-task-timer/shared-interfaces';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { TaskRepository } from '../repository/task.repository';
 import { TaskMapper } from '@my-task-timer/tasks-domain';
 import { Task } from '../entities/task.entity';
@@ -7,8 +7,8 @@ import { Task } from '../entities/task.entity';
 @Injectable()
 export class DeleteTaskUseCase implements Usecase<keyof Task, void> {
   constructor(
+    @Inject('TaskMapper') private readonly taskMapper: TaskMapper,
     private readonly taskRepository: TaskRepository,
-    private readonly taskMapper: TaskMapper
   ) { }
 
   async execute(input: keyof Task) {

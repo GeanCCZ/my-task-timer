@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Usecase } from '@my-task-timer/shared-interfaces';
 import { Task, ResponseTaskDto, CreateTaskDto, TaskRepository, TaskMapper } from '@my-task-timer/tasks-domain';
 
@@ -6,7 +6,7 @@ import { Task, ResponseTaskDto, CreateTaskDto, TaskRepository, TaskMapper } from
 export class CreateTaskUseCase
   implements Usecase<CreateTaskDto, ResponseTaskDto> {
   constructor(
-    private readonly taskMapper: TaskMapper,
+    @Inject('TaskMapper') private readonly taskMapper: TaskMapper,
     private readonly taskRepository: TaskRepository,
   ) { }
 

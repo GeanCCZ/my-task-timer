@@ -18,7 +18,7 @@ import { TaskRepositoryImpl } from '@my-task-timer/tasks-data-source';
   controllers: [TaskController],
   imports: [],
   providers: [
-    TaskMapper,
+    { provide: `TaskMapper`, useClass: TaskMapper },
     { provide: TaskRepository, useClass: TaskRepositoryImpl },
     CreateTaskUseCase,
     UpdateTaskUseCase,
@@ -26,6 +26,6 @@ import { TaskRepositoryImpl } from '@my-task-timer/tasks-data-source';
     FindAllTasksUseCase,
     FindTaskByIdUseCase
   ],
-  exports: [TaskRepository, TaskMapper],
+  exports: [TaskRepository, UpdateTaskUseCase, FindTaskByIdUseCase],
 })
 export class TasksResourceModule { }
