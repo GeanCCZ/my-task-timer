@@ -3,6 +3,8 @@ import { UserDto } from '../dtos/user.dto';
 import { AccountRepository } from '../repository/account.repository';
 import { UserMapper } from '../mappers/user.mapper';
 import { Injectable } from '@nestjs/common';
+import { tryCatch } from '@my-task-timer/shared-utils-errors';
+import { Account } from '../entities/account.entity';
 
 @Injectable()
 export class UpdateUseCase
@@ -22,8 +24,14 @@ export class UpdateUseCase
   }): Promise<UserDto> {
     const userInput = this.userMapper.toEntity(input);
 
-    const updatedUser = await this.accountRepository.updateOne(id, userInput);
+    const { data: updatedUser, error } = await tryCatch(
+      this.accountRepository.updateOne(id, userInput)
+    );
 
-    return this.userMapper.toDto(updatedUser);
+    if (error) {
+      console.error(error);
+    }
+
+    return this.userMapper.toDto(updatedUser as Account);
   }
 }

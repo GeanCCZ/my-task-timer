@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Usecase } from '@my-task-timer/shared-interfaces';
-import { CreateTaskDto } from '../dtos/create.task.dto';
+import { CreateTaskDto, ResponseTaskDto } from '../dtos';
 import { Task } from '../entities/task.entity';
 import { TaskRepository } from '../repository/task.repository';
 import { TaskMapper } from '../mappers/task.mapper';
-import { ResponseTaskDto } from '../dtos/response.task.dto';
 
 @Injectable()
 export class FindAllTasksUseCase implements Usecase<CreateTaskDto, Task[]> {

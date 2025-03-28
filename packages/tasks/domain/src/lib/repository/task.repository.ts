@@ -6,9 +6,10 @@ import {
   Update,
 } from '@my-task-timer/shared-interfaces';
 import { Task } from '../entities/task.entity';
-import { UpdateTaskDto } from '../dtos/update.task.dto';
-import { ResponseTaskDto } from '../dtos/response.task.dto';
+import { ResponseTaskDto } from '../dtos';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export abstract class TaskRepository
   implements
   Create<Task, Task>,

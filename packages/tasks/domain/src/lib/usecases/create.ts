@@ -1,21 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { Usecase } from '@my-task-timer/shared-interfaces';
+import { TaskMapper} from '../mappers/task.mapper';
 import { TaskRepository } from '../repository/task.repository';
-import { CreateTaskDto } from '../dtos/create.task.dto';
-import { TaskMapper } from '../mappers/task.mapper';
 import { Task } from '../entities/task.entity';
-import { ResponseTaskDto } from '../dtos/response.task.dto';
+import { ResponseTaskDto, CreateTaskDto } from '../dtos';
 
 @Injectable()
 export class CreateTaskUseCase
-  implements Usecase<CreateTaskDto, ResponseTaskDto> {
+  implements Usecase<CreateTaskDto, ResponseTaskDto>
+{
   constructor(
-    private readonly taskRepository: TaskRepository,
-    private readonly taskMapper: TaskMapper
-  ) { }
+    private readonly taskMapper: TaskMapper,
+    private readonly taskRepository: TaskRepository
+  ) {}
 
   async execute(input: CreateTaskDto): Promise<ResponseTaskDto> {
-
     const taskDomain: Task = this.taskMapper.toEntity(input) as unknown as Task;
 
     taskDomain.userId = input.user.id!;
