@@ -6,6 +6,7 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
+import { GlobalExceptionFilter, TransformResponseInterceptor } from '@my-task-timer/shared-utils-errors';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,6 +18,8 @@ async function bootstrap() {
       whitelist: true,
     })
   );
+  app.useGlobalInterceptors(new TransformResponseInterceptor());
+  app.useGlobalFilters(new GlobalExceptionFilter());
   const port = process.env.PORT || 3000;
   await app.listen(port);
   Logger.log(

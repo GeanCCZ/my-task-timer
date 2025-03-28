@@ -2,7 +2,7 @@ import { Usecase } from '@my-task-timer/shared-interfaces';
 import { UserDto } from '../dtos/user.dto';
 import { AccountRepository } from '../repository/account.repository';
 import { UserMapper } from '../mappers/user.mapper';
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { tryCatch } from '@my-task-timer/shared-utils-errors';
 import { Account } from '../entities/account.entity';
 
@@ -22,6 +22,12 @@ export class UpdateUseCase
     id: string;
     input: UserDto;
   }): Promise<UserDto> {
+
+    id = "test-error"
+    if (id === "test-error") {
+      throw new InternalServerErrorException("Erro forçado no use case");
+    }
+
     const userInput = this.userMapper.toEntity(input);
 
     const { data: updatedUser, error } = await tryCatch(
@@ -29,7 +35,9 @@ export class UpdateUseCase
     );
 
     if (error) {
-      console.error(error);
+      throw new InternalServerErrorException(
+        'Something went wrong while updating user'
+      );
     }
 
     return this.userMapper.toDto(updatedUser as Account);
