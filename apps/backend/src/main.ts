@@ -6,7 +6,8 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import { GlobalExceptionFilter, TransformResponseInterceptor } from '@my-task-timer/shared-utils-errors';
+import { GlobalExceptionFilter } from '@my-task-timer/shared-utils-errors';
+import { TransformResponseInterceptor } from '@my-task-timer/shared-utils-interceptors';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

@@ -1,0 +1,26 @@
+{
+  "name": "shared-utils-interceptor",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/shared/utils/interceptors/src",
+  "projectType": "library",
+  "tags": ["shared-utils-interceptors"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/shared/utils/interceptors",
+        "main": "packages/shared/utils/interceptors/src/index.ts",
+        "tsConfig": "packages/shared/utils/interceptors/tsconfig.lib.json",
+        "assets": []
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/shared/utils/interceptors/jest.config.ts"
+      }
+    }
+  }
+}
