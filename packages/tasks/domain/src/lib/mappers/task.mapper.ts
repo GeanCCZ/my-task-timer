@@ -1,9 +1,6 @@
 import { Mapper } from '@my-task-timer/shared-interfaces';
-import { CreateTaskDto } from '../dtos/create.task.dto';
-import { Task } from '../entities/task.entity';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
-import { UpdateTaskDto } from '../dtos/update.task.dto';
-import { ResponseTaskDto } from '../dtos/response.task.dto';
+import { UpdateTaskDto, ResponseTaskDto, Task, CreateTaskDto } from '@my-task-timer/tasks-domain';
 
 export class TaskMapper implements Mapper<CreateTaskDto, any> {
   toEntity(input: CreateTaskDto | UpdateTaskDto) {
