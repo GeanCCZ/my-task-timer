@@ -10,12 +10,12 @@ export class UserMapper implements Mapper<UserDto, Account> {
     };
   }
 
-  toEntity(input: UserDto): Account {
+  toEntity(input: UserDto, existingAccount?:Account): Account {
     return {
       id: input.id,
       email: input.email,
       username: input.username,
-      password: '',
+      password: existingAccount?.password || '',
     };
   }
 }

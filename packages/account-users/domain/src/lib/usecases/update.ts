@@ -2,14 +2,12 @@ import { Usecase } from '@my-task-timer/shared-interfaces';
 import { UserDto } from '../dtos/user.dto';
 import { AccountRepository } from '../repository/account.repository';
 import { UserMapper } from '../mappers/user.mapper';
+import { Injectable } from '@nestjs/common';
 import {
-  BadRequestException,
-  ConflictException,
-  Injectable,
-  InternalServerErrorException,
   NotFoundException,
-} from '@nestjs/common';
-import { tryCatch } from '@my-task-timer/shared-utils-errors';
+  InternalServerError,
+  tryCatch,
+} from '@my-task-timer/shared-utils-errors';
 import { Account } from '../entities/account.entity';
 
 @Injectable()
@@ -28,25 +26,29 @@ export class UpdateUseCase
     id: string;
     input: UserDto;
   }): Promise<UserDto> {
-    const userInput = this.userMapper.toEntity(input);
+    const existingUser = await this.findUserOrFail(id);
 
-    const { data: user, error: findError } = await tryCatch(
-      this.accountRepository.findOne(id)
-    );
+    const userInput = this.userMapper.toEntity(input, existingUser);
 
-    if (findError || !user) {
-      throw new NotFoundException(`Account with id ${id} not found`);
-    }
     const { data: updatedUser, error: updatedUserError } = await tryCatch(
       this.accountRepository.updateOne(id, userInput)
     );
 
-    if (updatedUserError) {
-      throw new InternalServerErrorException(
-        'Something went wrong while updating user'
-      );
-    }
+    if (updatedUserError || !updatedUser)
+      throw new InternalServerError('Something went wrong while updating user');
 
     return this.userMapper.toDto(updatedUser as Account);
+  }
+
+  private async findUserOrFail(id: string) {
+    const { data: user, error: findError } = await tryCatch(
+      this.accountRepository.findOne(id),
+      (error) => new InternalServerError('Failed to fetch user: ' + error)
+    );
+
+    if (findError || !user)
+      throw new NotFoundException(`Account with id ${id} not found`);
+
+    return user;
   }
 }
