@@ -19,7 +19,7 @@ import {
   Post,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBadGatewayResponse, ApiBadRequestResponse, ApiResponse } from '@nestjs/swagger';
 
 import { CreateTaskDto } from 'packages/tasks/domain/src/lib/dtos/create.task.dto';
 import { UpdateTaskDto } from 'packages/tasks/domain/src/lib/dtos/update.task.dto';
@@ -41,6 +41,8 @@ export class TaskController {
     description: 'Task created successfully',
     type: ResponseTaskDto,
   })
+  @ApiBadRequestResponse({ description: 'Bad request' })
+  @ApiBadGatewayResponse({ description: 'Bad gateway' })
   async createTask(@Body() input: CreateTaskDto) {
     return await this.createTaskUseCase.execute(input);
   }
@@ -51,6 +53,9 @@ export class TaskController {
     description: 'Task updated successfully',
     type: ResponseTaskDto,
   })
+  @ApiResponse({ status: 204, description: 'Task not found' })
+  @ApiBadRequestResponse({ description: 'Bad request' })
+  @ApiBadGatewayResponse({ description: 'Bad gateway' })
   async updateTask(@Body() input: UpdateTaskDto) {
     return await this.updateTaskUseCase.execute(input);
   }
@@ -60,6 +65,9 @@ export class TaskController {
     status: 200,
     description: 'Task deleted successfully',
   })
+  @ApiResponse({ status: 204, description: 'Task not found' })
+  @ApiBadRequestResponse({ description: 'Bad request' })
+  @ApiBadGatewayResponse({ description: 'Bad gateway' })
   async deleteTask(@Param('id') id: keyof Task) {
     return await this.deleteTaskUseCase.execute(id);
   }
@@ -70,6 +78,9 @@ export class TaskController {
     description: 'All tasks retrieved successfully',
     type: [ResponseTaskDto],
   })
+  @ApiResponse({ status: 204, description: 'No tasks found' })
+  @ApiBadRequestResponse({ description: 'Bad request' })
+  @ApiBadGatewayResponse({ description: 'Bad gateway' })
   async findAllTasks() {
     return await this.findAllTasksUseCase.execute();
   }
@@ -80,6 +91,9 @@ export class TaskController {
     description: 'Task retrieved successfully',
     type: ResponseTaskDto,
   })
+  @ApiResponse({ status: 204, description: 'Task not found' })
+  @ApiBadRequestResponse({ description: 'Bad request' })
+  @ApiBadGatewayResponse({ description: 'Bad gateway' })
   async findTaskById(@Param('id') id: keyof Task) {
     return await this.findTaskByIdUseCase.execute(id);
   }

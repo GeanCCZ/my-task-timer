@@ -20,7 +20,7 @@ import {
 } from '@my-task-timer/account-users-domain';
 import { AuthenticatedRequest } from '@my-task-timer/shared-interfaces';
 import { AccessTokenGuard } from '@my-task-timer/shared-resource';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBadGatewayResponse, ApiBadRequestResponse, ApiResponse } from '@nestjs/swagger';
 
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -39,6 +39,8 @@ export class UserController {
     description: 'User retrieved successfully',
     type: UserDto,
   })
+  @ApiBadRequestResponse({ description: 'Bad request' })
+  @ApiBadGatewayResponse({ description: 'Bad gateway' })
   async findOne(@Req() req: AuthenticatedRequest) {
     const id = req.user.userID;
     return await this.findOneUseCase.execute(id);
@@ -51,6 +53,8 @@ export class UserController {
     description: 'User updated successfully',
     type: UserDto,
   })
+  @ApiBadRequestResponse({ description: 'Bad request' })
+  @ApiBadGatewayResponse({ description: 'Bad gateway' })
   async update(@Req() req: AuthenticatedRequest, @Body() input: UserDto) {
     const id = req.user.userID;
     return await this.updateUseCase.execute({ id, input });
@@ -62,6 +66,8 @@ export class UserController {
     status: HttpStatus.OK,
     description: 'User deleted successfully',
   })
+  @ApiBadRequestResponse({ description: 'Bad request' })
+  @ApiBadGatewayResponse({ description: 'Bad gateway' })
   async delete(@Req() req: AuthenticatedRequest) {
     const id = req.user.userID;
     return await this.deleteUseCase.execute(id);
