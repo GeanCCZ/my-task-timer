@@ -18,18 +18,28 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
     let message = 'Internal server error';
-    let errorType: "UNAUTHORIZED" | "FORBIDDEN" | "BAD_REQUEST" | "NOT_FOUND" | "INTERNAL_SERVER_ERROR" | "CONFLICT" = HttpErrorType.INTERNAL_SERVER_ERROR;
+    let errorType:
+      | 'UNAUTHORIZED'
+      | 'FORBIDDEN'
+      | 'BAD_REQUEST'
+      | 'NOT_FOUND'
+      | 'INTERNAL_SERVER_ERROR'
+      | 'CONFLICT' = HttpErrorType.INTERNAL_SERVER_ERROR;
+    let details: string[] | undefined = undefined;
 
     if (exception instanceof CustomException) {
       status = exception.getStatus();
       message = exception.message;
       errorType = exception.errorType;
+      details = this.formatStackTrace(exception.stack);
     } else if (exception instanceof HttpException) {
       status = exception.getStatus();
       message = exception.message;
       errorType = this.mapStandardErrorToType(exception);
+      details = this.formatStackTrace(exception.stack);
     } else if (exception instanceof Error) {
       message = exception.message;
+      details = this.formatStackTrace(exception.stack);
     }
 
     response.status(status).json({
@@ -37,6 +47,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       status,
       message,
       errorType,
+      details,
       list: request.body || {},
       timestamp: new Date().toISOString(),
     });
@@ -60,5 +71,19 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       default:
         return HttpErrorType.INTERNAL_SERVER_ERROR;
     }
+  }
+
+  private formatStackTrace(stack?: string): string[] | undefined {
+    if (!stack) return undefined;
+
+    return stack
+      .split('\n')
+      .map((line) =>
+        line
+          .replace(/^.*webpack:/, '')
+          .replace(/.*dist\/apps\/backend\//, '')
+          .trim()
+      )
+      .filter((line) => !line.includes('node:internal'));
   }
 }
