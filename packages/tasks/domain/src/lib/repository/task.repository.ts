@@ -6,7 +6,7 @@ import {
   Update,
 } from '@my-task-timer/shared-interfaces';
 import { Task } from '../entities/task.entity';
-import { ResponseTaskDto } from '../dtos';
+import { ResponseTaskDto } from '../dtos/response.task.dto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

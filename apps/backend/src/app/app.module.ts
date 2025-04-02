@@ -18,4 +18,4 @@ import { TimeLogResourceModule } from '@my-task-timer/time-log-resource';
     TimeLogResourceModule
   ],
 })
-export class AppModule { }
+export class AppModule {}

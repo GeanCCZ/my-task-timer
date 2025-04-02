@@ -1,10 +1,7 @@
 import { Mapper } from '@my-task-timer/shared-interfaces';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
-import { Task } from '../entities/task.entity';
-import { ResponseTaskDto, CreateTaskDto, UpdateTaskDto } from '../dtos';
-import { Injectable } from '@nestjs/common';
+import { UpdateTaskDto, ResponseTaskDto, Task, CreateTaskDto } from '@my-task-timer/tasks-domain';
 
-@Injectable()
 export class TaskMapper implements Mapper<CreateTaskDto, any> {
   toEntity(input: CreateTaskDto | UpdateTaskDto) {
     if (input instanceof UpdateTaskDto) {

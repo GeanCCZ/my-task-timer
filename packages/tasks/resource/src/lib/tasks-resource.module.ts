@@ -5,24 +5,27 @@ import {
   DeleteTaskUseCase,
   FindAllTasksUseCase,
   FindTaskByIdUseCase,
+
   UpdateTaskUseCase,
   TaskRepository,
   TaskMapper,
+
 } from '@my-task-timer/tasks-domain';
 import { TaskRepositoryImpl } from '@my-task-timer/tasks-data-source';
 
+
 @Module({
-  imports: [],
   controllers: [TaskController],
+  imports: [],
   providers: [
+    { provide: `TaskMapper`, useClass: TaskMapper },
+    { provide: TaskRepository, useClass: TaskRepositoryImpl },
     CreateTaskUseCase,
     UpdateTaskUseCase,
     DeleteTaskUseCase,
     FindAllTasksUseCase,
-    FindTaskByIdUseCase,
-    TaskMapper,
-    { provide: TaskRepository, useClass: TaskRepositoryImpl },
+    FindTaskByIdUseCase
   ],
-  exports: [TaskRepository, TaskMapper],
+  exports: [TaskRepository, UpdateTaskUseCase, FindTaskByIdUseCase],
 })
-export class TasksResourceModule {}
+export class TasksResourceModule { }
