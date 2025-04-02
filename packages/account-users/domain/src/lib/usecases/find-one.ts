@@ -17,18 +17,16 @@ export class FindOneUseCase implements Usecase<string, UserDto> {
   ) {}
 
   async execute(id: string): Promise<UserDto> {
-    const { data: userDomain, error: userError } = await tryCatch(
-      this.accountRepository.findOne(id)
-    );
+    const { data, error } = await tryCatch(this.accountRepository.findOne(id));
 
-    if (userError || !userDomain) {
-      throw userError?.message.includes('not found')
+    if (error || !data) {
+      throw error?.message.includes('not found')
         ? new NotFoundException(`User with id ${id} does not exist`)
         : new InternalServerError(
             'An unexpected error occurred while retrieving the user'
           );
     }
 
-    return this.userMapper.toDto(userDomain);
+    return this.userMapper.toDto(data);
   }
 }
