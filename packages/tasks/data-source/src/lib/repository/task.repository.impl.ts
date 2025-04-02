@@ -28,16 +28,13 @@ export class TaskRepositoryImpl implements TaskRepository {
     return updateTask;
   }
 
-  async deleteOne(id: keyof Task) {
-    const [deleteTask]: any = await this.db
-      .delete(schema.tasks)
-      .where(eq(schema.tasks.id, id))
-      .returning();
-    return deleteTask;
+  async deleteOne(id: string) {
+    await this.db.delete(schema.tasks).where(eq(schema.tasks.id, id)).execute();
+    return 'Task removed successfully';
   }
 
-  async findOne(id: keyof Task) {
-    const [findOneTask]: any = await this.db
+  async findOne(id: string): Promise<Task> {
+    const [findOneTask] = await this.db
       .select()
       .from(schema.tasks)
       .where(eq(schema.tasks.id, id));
