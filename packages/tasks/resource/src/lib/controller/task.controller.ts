@@ -115,7 +115,7 @@ export class TaskController {
   @ApiResponse({ status: 204, description: 'Task not found' })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiBadGatewayResponse({ description: 'Bad gateway' })
-  async findTaskById(@Param('id') id: keyof Task) {
+  async findTaskById(@Param('id') id: string) {
     return await this.findTaskByIdUseCase.execute(id);
   }
 }
