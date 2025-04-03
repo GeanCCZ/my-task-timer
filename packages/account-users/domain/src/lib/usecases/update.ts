@@ -34,7 +34,7 @@ export class UpdateUseCase
       this.accountRepository.updateOne(id, userInput)
     );
 
-    if (updatedUserError || !updatedUser)
+    if (updatedUserError)
       throw new InternalServerError('Something went wrong while updating user');
 
     return this.userMapper.toDto(updatedUser as Account);

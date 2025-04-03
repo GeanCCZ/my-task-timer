@@ -2,13 +2,17 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Usecase } from '@my-task-timer/shared-interfaces';
 import { UpdateTaskDto, ResponseTaskDto } from '../dtos';
 import { TaskMapper } from '../mappers/task.mapper';
-import { Task } from '../entities/task.entity';
 import { TaskRepository } from '../repository/task.repository';
 import { FindTaskByIdUseCase } from './findById';
+import {
+  InternalServerError,
+  NotFoundException,
+  tryCatch,
+} from '@my-task-timer/shared-utils-errors';
 
 @Injectable()
 export class UpdateTaskUseCase
-  implements Usecase<UpdateTaskDto, ResponseTaskDto>
+  implements Usecase<{ id: string; input: UpdateTaskDto }, ResponseTaskDto>
 {
   constructor(
     @Inject('TaskMapper') private readonly taskMapper: TaskMapper,
@@ -16,21 +20,36 @@ export class UpdateTaskUseCase
     private readonly findTaskByIdUseCase: FindTaskByIdUseCase
   ) {}
 
-  async execute(input: UpdateTaskDto): Promise<ResponseTaskDto> {
-    const findedTask = await this.findTaskByIdUseCase.execute(
-      input.id as keyof Task
+  async execute({
+    id,
+    input,
+  }: {
+    id: string;
+    input: UpdateTaskDto;
+  }): Promise<ResponseTaskDto> {
+    const { data: existingTask, error: findError } = await tryCatch(
+      this.findTaskByIdUseCase.execute(id)
     );
 
-    const taskDomain: Task = this.taskMapper.toEntity(input) as unknown as Task;
+    if (findError) {
+      throw new NotFoundException(`Task with id ${id} not found`);
+    }
 
-    const updatedTask = await this.taskRepository.updateOne(
-      taskDomain.id as keyof Task,
-      {
-        ...findedTask,
-        ...taskDomain,
-        user: findedTask.user ?? taskDomain.user!,
-      }
+    const updateData = this.taskMapper.toEntity(input);
+
+    const mergeTask = {
+      ...existingTask,
+      ...updateData,
+      updatedAt: new Date(),
+    };
+
+    const { data: updateTask, error: updateError } = await tryCatch(
+      this.taskRepository.updateOne(id, mergeTask)
     );
-    return this.taskMapper.toResponse(updatedTask);
+
+    if (updateError) {
+      throw new InternalServerError('Something went wrong while updating task');
+    }
+    return this.taskMapper.toDto(updateTask);
   }
 }

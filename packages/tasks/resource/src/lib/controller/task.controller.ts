@@ -4,7 +4,6 @@ import {
   FindAllTasksUseCase,
   FindTaskByIdUseCase,
   ResponseTaskDto,
-  Task,
   UpdateTaskUseCase,
 } from '@my-task-timer/tasks-domain';
 
@@ -61,7 +60,7 @@ export class TaskController {
   }
 
   @UseGuards(AccessTokenGuard)
-  @Patch()
+  @Patch(':id')
   @ApiResponse({
     status: 200,
     description: 'Task updated successfully',
@@ -70,12 +69,8 @@ export class TaskController {
   @ApiResponse({ status: 204, description: 'Task not found' })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiBadGatewayResponse({ description: 'Bad gateway' })
-  async updateTask(
-    @Req() req: AuthenticatedRequest,
-    @Body() input: UpdateTaskDto
-  ) {
-    const id = req.user.userID;
-    return await this.updateTaskUseCase.execute(input);
+  async updateTask(@Param('id') id: string, @Body() input: UpdateTaskDto) {
+    return await this.updateTaskUseCase.execute({ id, input });
   }
 
   @UseGuards(AccessTokenGuard)

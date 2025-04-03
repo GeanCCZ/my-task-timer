@@ -18,14 +18,14 @@ export class TaskRepositoryImpl implements TaskRepository {
     return createTask;
   }
 
-  async updateOne(taskId: keyof Task, input: Task): Promise<Task> {
-    const { id, ...updateData } = input;
-    const [updateTask]: Task[] = await this.db
+  async updateOne(id: string, input: Task): Promise<Task> {
+    const [updatedTask] = await this.db
       .update(schema.tasks)
-      .set(updateData)
+      .set(input)
       .where(eq(schema.tasks.id, id))
       .returning();
-    return updateTask;
+
+    return updatedTask;
   }
 
   async deleteOne(id: string) {
