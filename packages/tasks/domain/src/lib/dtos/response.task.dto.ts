@@ -4,28 +4,25 @@ import { Exclude, Expose } from 'class-transformer';
 
 export class ResponseTaskDto {
   @Expose()
-  id!: string;
+  id: string;
 
   @Expose()
-  title!: string;
+  title: string;
 
   @Expose()
-  status!: Status;
+  status: Status;
 
   @Expose()
-  dueDate!: string;
+  dueDate: string;
 
   @Exclude()
-  createdAt!: Date;
+  createdAt: Date;
 
   @Exclude()
-  updatedAt!: Date;
-
-  @Expose()
-  totalTimeSpent!: string;
+  updatedAt: Date;
 
   @Exclude()
-  userId!: string;
+  userId?: string;
 
   @Exclude()
   user?: Account;

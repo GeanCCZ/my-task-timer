@@ -52,8 +52,12 @@ export class TaskController {
   })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiBadGatewayResponse({ description: 'Bad gateway' })
-  async createTask(@Body() input: CreateTaskDto) {
-    return await this.createTaskUseCase.execute(input);
+  async createTask(
+    @Req() req: AuthenticatedRequest,
+    @Body() input: CreateTaskDto
+  ) {
+    const userId = req.user.userID;
+    return await this.createTaskUseCase.execute({ userId, input });
   }
 
   @UseGuards(AccessTokenGuard)
