@@ -22,7 +22,7 @@ export class ResponseTaskDto {
   updatedAt: Date;
 
   @Exclude()
-  userId?: string;
+  userId: string;
 
   @Exclude()
   user?: Account;

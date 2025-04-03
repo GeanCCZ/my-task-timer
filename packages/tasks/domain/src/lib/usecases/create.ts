@@ -11,7 +11,7 @@ import {
 
 @Injectable()
 export class CreateTaskUseCase
-  implements Usecase<CreateTaskDto, ResponseTaskDto>
+  implements Usecase<{ userId: string; input: CreateTaskDto }, ResponseTaskDto>
 {
   constructor(
     @Inject('TaskMapper') private readonly taskMapper: TaskMapper,
@@ -25,8 +25,7 @@ export class CreateTaskUseCase
     userId: string;
     input: CreateTaskDto;
   }): Promise<ResponseTaskDto> {
-    const taskDomain = this.createTaskDomain(input);
-
+    const taskDomain = this.createTaskDomain(userId, input);
     const { data: createdTask, error } = await tryCatch(
       this.taskRepository.createOne(taskDomain)
     );
@@ -36,18 +35,11 @@ export class CreateTaskUseCase
     return this.taskMapper.toDto(createdTask);
   }
 
-  private createTaskDomain(input: CreateTaskDto) {
-    const now = new Date(
-      new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' })
-    );
-
+  private createTaskDomain(userId: string, input: CreateTaskDto) {
+    const mappedEntity = this.taskMapper.toEntity(input);
     return {
-      ...this.taskMapper.toEntity(input),
-      userId: input.user.id,
-      status: STATUS.TODO,
-      totalTimeSpent: '0',
-      createdAt: now,
-      updatedAt: now,
+      ...mappedEntity,
+      userId,
     } as Task;
   }
 }
