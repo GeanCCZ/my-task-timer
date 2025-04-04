@@ -18,34 +18,34 @@ export class TaskRepositoryImpl implements TaskRepository {
     return createTask;
   }
 
-  async updateOne(taskId: keyof Task, input: Task): Promise<Task> {
-    const { id, ...updateData } = input;
-    const [updateTask]: Task[] = await this.db
+  async updateOne(id: string, input: Task): Promise<Task> {
+    const [updatedTask] = await this.db
       .update(schema.tasks)
-      .set(updateData)
+      .set(input)
       .where(eq(schema.tasks.id, id))
       .returning();
-    return updateTask;
+
+    return updatedTask;
   }
 
-  async deleteOne(id: keyof Task) {
-    const [deleteTask]: any = await this.db
-      .delete(schema.tasks)
-      .where(eq(schema.tasks.id, id))
-      .returning();
-    return deleteTask;
+  async deleteOne(id: string) {
+    await this.db.delete(schema.tasks).where(eq(schema.tasks.id, id)).execute();
+    return 'Task removed successfully';
   }
 
-  async findOne(id: keyof Task) {
-    const [findOneTask]: any = await this.db
+  async findOne(id: string): Promise<Task> {
+    const [findOneTask] = await this.db
       .select()
       .from(schema.tasks)
       .where(eq(schema.tasks.id, id));
     return findOneTask;
   }
 
-  async findAll() {
-    const tasks: Task[] = await this.db.select().from(schema.tasks);
+  async findAllById(userId: string) {
+    const tasks: Task[] = await this.db
+      .select()
+      .from(schema.tasks)
+      .where(eq(schema.tasks.userId, userId));
     return tasks;
   }
 }

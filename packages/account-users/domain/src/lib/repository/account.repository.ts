@@ -15,7 +15,7 @@ export abstract class AccountRepository
 {
   abstract createOne(input: Account): Promise<Account>;
 
-  abstract findOne(key: Account['id']): Promise<Account>;
+  abstract findOne(id: string): Promise<Account>;
 
   abstract findByEmailOrUsername(
     email?: string,

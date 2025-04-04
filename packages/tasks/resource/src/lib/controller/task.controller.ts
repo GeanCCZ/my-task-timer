@@ -4,7 +4,6 @@ import {
   FindAllTasksUseCase,
   FindTaskByIdUseCase,
   ResponseTaskDto,
-  Task,
   UpdateTaskUseCase,
 } from '@my-task-timer/tasks-domain';
 
@@ -17,12 +16,20 @@ import {
   Param,
   Patch,
   Post,
+  Req,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBadGatewayResponse, ApiBadRequestResponse, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBadGatewayResponse,
+  ApiBadRequestResponse,
+  ApiResponse,
+} from '@nestjs/swagger';
 
 import { CreateTaskDto } from 'packages/tasks/domain/src/lib/dtos/create.task.dto';
 import { UpdateTaskDto } from 'packages/tasks/domain/src/lib/dtos/update.task.dto';
+import { AccessTokenGuard } from '@my-task-timer/shared-resource';
+import { AuthenticatedRequest } from '@my-task-timer/shared-interfaces';
 
 @Controller('tasks')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -33,8 +40,9 @@ export class TaskController {
     private readonly findAllTasksUseCase: FindAllTasksUseCase,
     private readonly findTaskByIdUseCase: FindTaskByIdUseCase,
     private readonly deleteTaskUseCase: DeleteTaskUseCase
-  ) { }
+  ) {}
 
+  @UseGuards(AccessTokenGuard)
   @Post()
   @ApiResponse({
     status: 201,
@@ -43,10 +51,15 @@ export class TaskController {
   })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiBadGatewayResponse({ description: 'Bad gateway' })
-  async createTask(@Body() input: CreateTaskDto) {
-    return await this.createTaskUseCase.execute(input);
+  async createTask(
+    @Req() req: AuthenticatedRequest,
+    @Body() input: CreateTaskDto
+  ) {
+    const userId = req.user.userID;
+    return await this.createTaskUseCase.execute({ userId, input });
   }
 
+  @UseGuards(AccessTokenGuard)
   @Patch(':id')
   @ApiResponse({
     status: 200,
@@ -56,10 +69,11 @@ export class TaskController {
   @ApiResponse({ status: 204, description: 'Task not found' })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiBadGatewayResponse({ description: 'Bad gateway' })
-  async updateTask(@Body() input: UpdateTaskDto) {
-    return await this.updateTaskUseCase.execute(input);
+  async updateTask(@Param('id') id: string, @Body() input: UpdateTaskDto) {
+    return await this.updateTaskUseCase.execute({ id, input });
   }
 
+  @UseGuards(AccessTokenGuard)
   @Delete(':id')
   @ApiResponse({
     status: 200,
@@ -68,10 +82,11 @@ export class TaskController {
   @ApiResponse({ status: 204, description: 'Task not found' })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiBadGatewayResponse({ description: 'Bad gateway' })
-  async deleteTask(@Param('id') id: keyof Task) {
+  async deleteTask(@Param('id') id: string) {
     return await this.deleteTaskUseCase.execute(id);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Get()
   @ApiResponse({
     status: 200,
@@ -81,10 +96,12 @@ export class TaskController {
   @ApiResponse({ status: 204, description: 'No tasks found' })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiBadGatewayResponse({ description: 'Bad gateway' })
-  async findAllTasks() {
-    return await this.findAllTasksUseCase.execute();
+  async findAllTasks(@Req() req: AuthenticatedRequest) {
+    const userId = req.user.userID;
+    return await this.findAllTasksUseCase.execute(userId);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Get(':id')
   @ApiResponse({
     status: 200,
@@ -94,7 +111,7 @@ export class TaskController {
   @ApiResponse({ status: 204, description: 'Task not found' })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiBadGatewayResponse({ description: 'Bad gateway' })
-  async findTaskById(@Param('id') id: keyof Task) {
+  async findTaskById(@Param('id') id: string) {
     return await this.findTaskByIdUseCase.execute(id);
   }
 }

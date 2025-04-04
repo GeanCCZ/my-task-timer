@@ -8,7 +8,6 @@ export interface Task {
   dueDate: string;
   createdAt: Date;
   updatedAt: Date;
-  totalTimeSpent: string;
 
   userId: string;
   user?: Account;
