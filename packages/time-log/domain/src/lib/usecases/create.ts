@@ -5,7 +5,7 @@ import {
   ResponseTimeLogDto,
 } from '@my-task-timer/time-log-domain';
 import { TimeLogMapper } from '../mappers/time-log.mapper';
-import { TimeLogRepository } from '../repository/timeLog.repository';
+import { TimeLogRepository } from '../repository/time-log.repository';
 import { TimeLog } from '../entities/time-log.entity';
 
 @Injectable()

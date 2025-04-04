@@ -1,6 +1,6 @@
 export * from './lib/entities/time-log.entity';
 export * from './lib/mappers/time-log.mapper';
-export * from './lib/repository/timeLog.repository';
+export * from './lib/repository/time-log.repository';
 export * from './lib/usecases/create';
 export * from './lib/usecases/delete';
 export * from './lib/usecases/findAll';
