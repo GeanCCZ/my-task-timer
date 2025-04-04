@@ -1,4 +1,4 @@
-import { CreateTaskDto } from './create.task.dto';
+import { CreateTaskDto } from './create-task.dto';
 import { PartialType } from '@nestjs/mapped-types';
 import { STATUS, Status } from '@my-task-timer/shared-interfaces';
 import { Expose } from 'class-transformer';

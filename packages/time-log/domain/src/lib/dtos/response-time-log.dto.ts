@@ -1,5 +1,5 @@
 import { Exclude, Expose } from 'class-transformer';
-import { UpdateTimeLogDto } from './update.timeLog';
+import { UpdateTimeLogDto } from './update-time-log';
 
 export class ResponseTimeLogDto extends UpdateTimeLogDto {
   @Expose()
