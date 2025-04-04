@@ -19,7 +19,7 @@ export class FindOneUseCase implements Usecase<string, UserDto> {
   async execute(id: string): Promise<UserDto> {
     const { data, error } = await tryCatch(this.accountRepository.findOne(id));
 
-    if (error || !data) {
+    if (error) {
       throw error?.message.includes('not found')
         ? new NotFoundException(`User with id ${id} does not exist`)
         : new InternalServerError(

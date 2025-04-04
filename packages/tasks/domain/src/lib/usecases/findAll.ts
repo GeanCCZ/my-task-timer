@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Usecase } from '@my-task-timer/shared-interfaces';
 import { ResponseTaskDto } from '../dtos';
-import { Task } from '../entities/task.entity';
 import { TaskRepository } from '../repository/task.repository';
 import { TaskMapper } from '../mappers/task.mapper';
 import {
+  InternalServerError,
   NotFoundException,
   tryCatch,
 } from '@my-task-timer/shared-utils-errors';
@@ -21,8 +21,13 @@ export class FindAllTasksUseCase implements Usecase<string, ResponseTaskDto[]> {
       this.taskRepository.findAllById(userId)
     );
 
-    if (error)
-      throw new NotFoundException(`No tasks with user id ${userId} found`);
+    if (error) {
+      throw error?.message.includes('not found')
+        ? new NotFoundException(`No tasks with user id ${userId} found`)
+        : new InternalServerError(
+            'An unexpected error occurred while retrieving the task'
+          );
+    }
 
     return data.map((task) => this.taskMapper.toDto(task));
   }
