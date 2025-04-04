@@ -10,18 +10,18 @@ import { TimeLog } from '../entities/time-log.entity';
 export abstract class TimeLogRepository
   implements
     Create<TimeLog, TimeLog>,
-    Update<TimeLog, keyof TimeLog, TimeLog>,
-    FindOne<TimeLog, keyof TimeLog, TimeLog>,
+    Update<TimeLog, 'id', TimeLog>,
+    FindOne<TimeLog, 'id', TimeLog>,
     FindAll<TimeLog>,
-    Delete<TimeLog, keyof TimeLog, void>
+    Delete<TimeLog, 'id', string>
 {
   abstract createOne(input: TimeLog): Promise<TimeLog>;
 
-  abstract updateOne(id: keyof TimeLog, input: TimeLog): Promise<TimeLog>;
+  abstract updateOne(id: string, input: TimeLog): Promise<TimeLog>;
 
-  abstract deleteOne(id: keyof TimeLog): Promise<void>;
+  abstract deleteOne(id: string): Promise<string>;
 
-  abstract findOne(id: keyof TimeLog): Promise<TimeLog>;
+  abstract findOne(id: string): Promise<TimeLog>;
 
   abstract findAll(): Promise<TimeLog[]>;
 }

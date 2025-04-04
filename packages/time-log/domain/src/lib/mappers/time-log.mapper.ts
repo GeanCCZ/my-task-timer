@@ -3,7 +3,7 @@ import {
   CreateTimeLogDto,
   ResponseTimeLogDto,
   UpdateTimeLogDto,
-} from '@my-task-timer/time-log-domain';
+} from '../dtos';
 import { TimeLog } from '../entities/time-log.entity';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 

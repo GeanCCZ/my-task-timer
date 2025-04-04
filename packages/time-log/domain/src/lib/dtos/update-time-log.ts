@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { CreateTimeLogDto } from '@my-task-timer/time-log-domain';
+import { CreateTimeLogDto } from './create-time-log.dto';
 import { IsDateString, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -19,5 +19,4 @@ export class UpdateTimeLogDto extends CreateTimeLogDto {
     description: 'Data de fim do log de tempo',
   })
   endedAt!: Date | null;
-
 }
