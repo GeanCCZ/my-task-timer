@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { TimeLogRepository } from "../repository/timeLog.repository";
-import { TimeLogMapper } from "../mappers/timeLog.mapper";
+import { TimeLogMapper } from "../mappers/time-log.mapper";
 import { Usecase } from "@my-task-timer/shared-interfaces";
-import { TimeLog } from "../entities/timeLog.entity";
+import { TimeLog } from "../entities/time-log.entity";
 
 @Injectable()
 export class DeleteTimeLogUseCase implements Usecase<keyof TimeLog, void> {

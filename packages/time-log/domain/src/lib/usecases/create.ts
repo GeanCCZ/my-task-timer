@@ -4,9 +4,9 @@ import {
   CreateTimeLogDto,
   ResponseTimeLogDto,
 } from '@my-task-timer/time-log-domain';
-import { TimeLogMapper } from '../mappers/timeLog.mapper';
+import { TimeLogMapper } from '../mappers/time-log.mapper';
 import { TimeLogRepository } from '../repository/timeLog.repository';
-import { TimeLog } from '../entities/timeLog.entity';
+import { TimeLog } from '../entities/time-log.entity';
 
 @Injectable()
 export class CreateTimeLogUseCase

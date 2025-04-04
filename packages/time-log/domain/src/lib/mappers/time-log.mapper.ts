@@ -4,7 +4,7 @@ import {
   ResponseTimeLogDto,
   UpdateTimeLogDto,
 } from '@my-task-timer/time-log-domain';
-import { TimeLog } from '../entities/timeLog.entity';
+import { TimeLog } from '../entities/time-log.entity';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 
 export class TimeLogMapper implements Mapper<CreateTimeLogDto, any> {

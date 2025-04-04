@@ -5,7 +5,7 @@ import {
   Delete,
   Update,
 } from '@my-task-timer/shared-interfaces';
-import { TimeLog } from '../entities/timeLog.entity';
+import { TimeLog } from '../entities/time-log.entity';
 
 export abstract class TimeLogRepository
   implements

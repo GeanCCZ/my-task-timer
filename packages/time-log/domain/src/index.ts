@@ -1,5 +1,5 @@
-export * from './lib/entities/timeLog.entity';
-export * from './lib/mappers/timeLog.mapper';
+export * from './lib/entities/time-log.entity';
+export * from './lib/mappers/time-log.mapper';
 export * from './lib/repository/timeLog.repository';
 export * from './lib/usecases/create';
 export * from './lib/usecases/delete';
