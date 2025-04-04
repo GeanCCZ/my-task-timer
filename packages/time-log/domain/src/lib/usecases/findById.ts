@@ -1,11 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Usecase } from '@my-task-timer/shared-interfaces';
-import {
-  ResponseTimeLogDto,
-  TimeLog,
-  TimeLogMapper,
-  TimeLogRepository,
-} from '@my-task-timer/time-log-domain';
+import { TimeLog } from '../entities/time-log.entity';
+import { ResponseTimeLogDto } from '../dtos';
+import { TimeLogRepository } from '../repository/time-log.repository';
+import { TimeLogMapper } from '../mappers/time-log.mapper';
 
 @Injectable()
 export class FindTimeLogByIdUseCase

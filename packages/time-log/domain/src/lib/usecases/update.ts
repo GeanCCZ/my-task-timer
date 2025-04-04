@@ -1,10 +1,9 @@
 import { Usecase } from '@my-task-timer/shared-interfaces';
 import { Injectable } from '@nestjs/common';
-import { ResponseTimeLogDto } from '../dtos/response-time-log.dto';
+import { ResponseTimeLogDto, UpdateTimeLogDto } from '../dtos';
 import { TimeLog } from '../entities/time-log.entity';
 import { TimeLogRepository } from '../repository/time-log.repository';
 import { TimeLogMapper } from '../mappers/time-log.mapper';
-import { UpdateTimeLogDto } from '../dtos/update-time-log';
 import { FindTimeLogByIdUseCase } from './findById';
 
 @Injectable()
@@ -18,7 +17,7 @@ export class UpdateTimeLogUseCase
   ) {}
 
   async execute(input: UpdateTimeLogDto): Promise<ResponseTimeLogDto> {
-    const findedTimeLog = await this.findTimeLogByIdUseCase.execute(
+    const existingTimeLog = await this.findTimeLogByIdUseCase.execute(
       input.id as keyof TimeLog
     );
 
@@ -28,7 +27,7 @@ export class UpdateTimeLogUseCase
       startedAt: new Date(input.startedAt),
     };
 
-    if (input.endedAt && findedTimeLog.endedAt !== input.endedAt) {
+    if (input.endedAt && existingTimeLog.endedAt !== input.endedAt) {
       timeLogDomain.endedAt = new Date(
         new Date(input.endedAt).toLocaleString('en-US', {
           timeZone: 'America/Sao_Paulo',
@@ -36,7 +35,7 @@ export class UpdateTimeLogUseCase
       );
 
       const timeDiff =
-        timeLogDomain.endedAt.getTime() - findedTimeLog.startedAt.getTime();
+        timeLogDomain.endedAt.getTime() - existingTimeLog.startedAt.getTime();
       const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
         (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -49,9 +48,9 @@ export class UpdateTimeLogUseCase
     }
 
     const updatedTimeLog = await this.timeLogRepository.updateOne(
-      findedTimeLog.id as keyof TimeLog,
+      existingTimeLog.id as keyof TimeLog,
       {
-        ...findedTimeLog,
+        ...existingTimeLog,
         ...timeLogDomain,
       }
     );

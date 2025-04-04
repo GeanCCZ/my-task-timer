@@ -1,9 +1,6 @@
 import { Usecase } from '@my-task-timer/shared-interfaces';
 import { Injectable } from '@nestjs/common';
-import {
-  CreateTimeLogDto,
-  ResponseTimeLogDto,
-} from '@my-task-timer/time-log-domain';
+import { CreateTimeLogDto, ResponseTimeLogDto } from '../dtos';
 import { TimeLogMapper } from '../mappers/time-log.mapper';
 import { TimeLogRepository } from '../repository/time-log.repository';
 import { TimeLog } from '../entities/time-log.entity';
