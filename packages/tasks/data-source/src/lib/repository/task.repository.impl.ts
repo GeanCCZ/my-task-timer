@@ -41,8 +41,11 @@ export class TaskRepositoryImpl implements TaskRepository {
     return findOneTask;
   }
 
-  async findAll() {
-    const tasks: Task[] = await this.db.select().from(schema.tasks);
+  async findAllById(userId: string) {
+    const tasks: Task[] = await this.db
+      .select()
+      .from(schema.tasks)
+      .where(eq(schema.tasks.userId, userId));
     return tasks;
   }
 }

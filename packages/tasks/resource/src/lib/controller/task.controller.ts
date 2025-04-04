@@ -96,8 +96,9 @@ export class TaskController {
   @ApiResponse({ status: 204, description: 'No tasks found' })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiBadGatewayResponse({ description: 'Bad gateway' })
-  async findAllTasks() {
-    return await this.findAllTasksUseCase.execute();
+  async findAllTasks(@Req() req: AuthenticatedRequest) {
+    const userId = req.user.userID;
+    return await this.findAllTasksUseCase.execute(userId);
   }
 
   @UseGuards(AccessTokenGuard)

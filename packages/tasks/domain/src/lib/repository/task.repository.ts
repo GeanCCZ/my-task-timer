@@ -1,7 +1,7 @@
 import {
   Create,
   Delete,
-  FindAll,
+  FindAllById,
   FindOne,
   Update,
 } from '@my-task-timer/shared-interfaces';
@@ -14,7 +14,7 @@ export abstract class TaskRepository
     Create<Task, Task>,
     Update<Task, 'id', Task>,
     FindOne<Task, 'id', Task>,
-    FindAll<Task>,
+    FindAllById<Task, 'userId', Task>,
     Delete<Task, 'id', string>
 {
   abstract createOne(input: Task): Promise<Task>;
@@ -25,5 +25,5 @@ export abstract class TaskRepository
 
   abstract findOne(id: string): Promise<Task>;
 
-  abstract findAll(): Promise<Task[]>;
+  abstract findAllById(userId: string): Promise<Task[]>;
 }
