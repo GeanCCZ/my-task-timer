@@ -6,7 +6,6 @@ import {
   Update,
 } from '@my-task-timer/shared-interfaces';
 import { Task } from '../entities/task.entity';
-import { ResponseTaskDto } from '../dtos';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -18,13 +17,13 @@ export abstract class TaskRepository
     FindAll<Task>,
     Delete<Task, 'id', string>
 {
-  abstract createOne(input: Task): Promise<ResponseTaskDto>;
+  abstract createOne(input: Task): Promise<Task>;
 
   abstract updateOne(id: string, input: Task): Promise<Task>;
 
   abstract deleteOne(id: string): Promise<string>;
 
-  abstract findOne(id: string): Promise<ResponseTaskDto>;
+  abstract findOne(id: string): Promise<Task>;
 
-  abstract findAll(): Promise<ResponseTaskDto[]>;
+  abstract findAll(): Promise<Task[]>;
 }

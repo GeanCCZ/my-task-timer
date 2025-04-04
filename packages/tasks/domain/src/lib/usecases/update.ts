@@ -3,7 +3,6 @@ import { Usecase } from '@my-task-timer/shared-interfaces';
 import { UpdateTaskDto, ResponseTaskDto } from '../dtos';
 import { TaskMapper } from '../mappers/task.mapper';
 import { TaskRepository } from '../repository/task.repository';
-import { FindTaskByIdUseCase } from './findById';
 import {
   InternalServerError,
   NotFoundException,
@@ -16,8 +15,7 @@ export class UpdateTaskUseCase
 {
   constructor(
     @Inject('TaskMapper') private readonly taskMapper: TaskMapper,
-    private readonly taskRepository: TaskRepository,
-    private readonly findTaskByIdUseCase: FindTaskByIdUseCase
+    private readonly taskRepository: TaskRepository
   ) {}
 
   async execute({
@@ -27,13 +25,7 @@ export class UpdateTaskUseCase
     id: string;
     input: UpdateTaskDto;
   }): Promise<ResponseTaskDto> {
-    const { data: existingTask, error: findError } = await tryCatch(
-      this.findTaskByIdUseCase.execute(id)
-    );
-
-    if (findError) {
-      throw new NotFoundException(`Task with id ${id} not found`);
-    }
+    const existingTask = await this.findTaskOrFail(id);
 
     const updateData = this.taskMapper.toEntity(input, true);
 
@@ -51,6 +43,19 @@ export class UpdateTaskUseCase
     if (updateError) {
       throw new InternalServerError('Something went wrong while updating task');
     }
+
     return this.taskMapper.toDto(updateTask);
+  }
+
+  private async findTaskOrFail(id: string) {
+    const { data: existingTask, error: findError } = await tryCatch(
+      this.taskRepository.findOne(id)
+    );
+
+    if (findError) {
+      throw new NotFoundException(`Task with id ${id} not found`);
+    }
+
+    return existingTask;
   }
 }
