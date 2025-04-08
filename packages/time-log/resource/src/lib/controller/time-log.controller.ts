@@ -4,7 +4,6 @@ import {
   DeleteTimeLogUseCase,
   FindTimeLogByIdUseCase,
   ResponseTimeLogDto,
-  TimeLog,
   UpdateTimeLogDto,
   UpdateTimeLogUseCase,
   FindAllTimeLogUseCase,
@@ -17,8 +16,9 @@ import {
   Get,
   Param,
   Patch,
-  Post, UseGuards,
-  UseInterceptors
+  Post,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiBadGatewayResponse,
@@ -50,9 +50,10 @@ export class TimeLogController {
   async createTimeLog(
     @Body() input: CreateTimeLogDto
   ): Promise<ResponseTimeLogDto> {
-    return this.createTimeLogUseCase.execute(input);
+    return await this.createTimeLogUseCase.execute(input);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Patch(':id')
   @ApiResponse({
     status: 200,
@@ -62,11 +63,13 @@ export class TimeLogController {
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiBadGatewayResponse({ description: 'Bad gateway' })
   async updateTimeLog(
+    @Param('id') id: string,
     @Body() input: UpdateTimeLogDto
   ): Promise<ResponseTimeLogDto> {
-    return this.updateTimeLogUseCase.execute(input);
+    return await this.updateTimeLogUseCase.execute({ id, input });
   }
 
+  @UseGuards(AccessTokenGuard)
   @Delete(':id')
   @ApiResponse({
     status: 200,
@@ -74,10 +77,11 @@ export class TimeLogController {
   })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiBadGatewayResponse({ description: 'Bad gateway' })
-  async deleteTimeLog(@Param('id') id: keyof TimeLog): Promise<void> {
-    return this.deleteTimeLogUseCase.execute(id);
+  async deleteTimeLog(@Param('id') id: string): Promise<string> {
+    return await this.deleteTimeLogUseCase.execute(id);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Get()
   @ApiResponse({
     status: 200,
@@ -98,9 +102,7 @@ export class TimeLogController {
   })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiBadGatewayResponse({ description: 'Bad gateway' })
-  async findTimeLogById(
-    @Param('id') id: keyof TimeLog
-  ): Promise<ResponseTimeLogDto> {
+  async findTimeLogById(@Param('id') id: string): Promise<ResponseTimeLogDto> {
     return this.findTimeLogByIdUseCase.execute(id);
   }
 }

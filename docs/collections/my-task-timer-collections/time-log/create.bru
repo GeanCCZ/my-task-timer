@@ -7,17 +7,16 @@ meta {
 post {
   url: http://localhost:3000/api/time-logs
   body: json
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiNjJjOGQ4MS1hOWM4LTQ5MGYtOWI3Yy0zNDI2ZjI5ZGMzZWYiLCJpYXQiOjE3NDQxNTI0NzMsImV4cCI6MTc0NDE1MzM3M30.FMz_DPapGfQik1dvC15WuK-BBHggxiwfdNEa-xum0sc
 }
 
 body:json {
   {
-    "startedAt": "19:25",
-    "task": {
-       "id": "9612c0dd-f51a-4845-b972-f8940bd2c014",
-        "title": "tarefa03",
-        "status": "TODO",
-        "dueDate": "2025-12-23"
-    }
+    "startedAt": "2025-12-23T00:00:00.000Z",
+    "taskId": "9612c0dd-f51a-4845-b972-f8940bd2c014"
   }
 }
