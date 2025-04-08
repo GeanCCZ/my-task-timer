@@ -17,14 +17,15 @@ import {
   Get,
   Param,
   Patch,
-  Post,
-  UseInterceptors,
+  Post, UseGuards,
+  UseInterceptors
 } from '@nestjs/common';
 import {
   ApiBadGatewayResponse,
   ApiBadRequestResponse,
   ApiResponse,
 } from '@nestjs/swagger';
+import { AccessTokenGuard } from '@my-task-timer/shared-resource';
 
 @Controller('time-logs')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -37,6 +38,7 @@ export class TimeLogController {
     private readonly findTimeLogByIdUseCase: FindTimeLogByIdUseCase
   ) {}
 
+  @UseGuards(AccessTokenGuard)
   @Post()
   @ApiResponse({
     status: 201,
