@@ -18,7 +18,6 @@ export class TimeLogMapper
 
     if (isUpdate) {
       const updateDto = input as UpdateTimeLogDto;
-      entity.id = updateDto.id;
 
       if (updateDto.startedAt !== undefined) {
         entity.startedAt = updateDto.startedAt;
