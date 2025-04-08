@@ -1,10 +1,15 @@
 import { Exclude, Expose } from 'class-transformer';
-import { UpdateTimeLogDto } from './update-time-log';
 
-export class ResponseTimeLogDto extends UpdateTimeLogDto {
+export class ResponseTimeLogDto {
   @Expose()
-  timeSpent!: string;
+  id: string;
+
+  @Expose()
+  endedAt: Date | null | undefined;
+
+  @Expose()
+  timeSpent: string;
 
   @Exclude()
-  taskId!: string;
+  taskId: string;
 }

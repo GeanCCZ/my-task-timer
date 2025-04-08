@@ -15,9 +15,7 @@ export class CreateTimeLogUseCase
   ) {}
 
   async execute(input: CreateTimeLogDto): Promise<ResponseTimeLogDto> {
-    const timeLogDomain: TimeLog = this.timeLogMapper.toEntity(
-      input
-    ) as unknown as TimeLog;
+    const timeLogDomain: TimeLog = this.timeLogMapper.toEntity(input);
 
     timeLogDomain.startedAt = new Date(
       new Date(timeLogDomain.startedAt).toLocaleString('en-US', {
@@ -29,6 +27,6 @@ export class CreateTimeLogUseCase
       timeLogDomain
     );
 
-    return this.timeLogMapper.toResponse(createdTimeLog);
+    return this.timeLogMapper.toDto(createdTimeLog);
   }
 }

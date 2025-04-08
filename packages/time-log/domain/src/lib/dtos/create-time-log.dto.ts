@@ -1,6 +1,4 @@
-import { Task } from '@my-task-timer/tasks-domain';
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
 import { IsDateString, IsNotEmpty } from 'class-validator';
 
 export class CreateTimeLogDto {
@@ -13,7 +11,7 @@ export class CreateTimeLogDto {
     example: '2025-01-01',
     description: 'Data de início do log de tempo',
   })
-  startedAt!: Date;
+  startedAt: Date;
 
   @IsNotEmpty({ message: 'A tarefa relacionada deve ser informada.' })
   @ApiProperty({

@@ -12,9 +12,7 @@ export class TaskMapper
   ): Partial<Task> {
     const entity: Partial<Task> = {};
 
-    // Usamos um parâmetro explícito para indicar se é uma atualização
     if (isUpdate) {
-      // É uma atualização
       if (input.title !== undefined) entity.title = input.title;
       if (input.dueDate !== undefined) entity.dueDate = input.dueDate;
       // IMPORTANTE: não definimos um status padrão na atualização
@@ -23,7 +21,6 @@ export class TaskMapper
       }
       entity.updatedAt = new Date();
     } else {
-      // É uma criação
       entity.title = input.title;
       entity.dueDate = input.dueDate;
       entity.status = STATUS.TODO;
