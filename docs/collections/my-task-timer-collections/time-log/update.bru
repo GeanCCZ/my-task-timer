@@ -1,15 +1,22 @@
 meta {
-  name: find all
+  name: update
   type: http
-  seq: 2
+  seq: 4
 }
 
-get {
-  url: http://localhost:3000/api/tasks
-  body: none
+patch {
+  url: http://localhost:3000/api/time-logs/cc1dd187-b2b5-4837-9030-bcd0837ed9d8
+  body: json
   auth: bearer
 }
 
 auth:bearer {
   token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiNjJjOGQ4MS1hOWM4LTQ5MGYtOWI3Yy0zNDI2ZjI5ZGMzZWYiLCJpYXQiOjE3NDQxNTI0NzMsImV4cCI6MTc0NDE1MzM3M30.FMz_DPapGfQik1dvC15WuK-BBHggxiwfdNEa-xum0sc
+}
+
+body:json {
+  {
+    "id": "00",
+    "endedAt": "2025-01-01"
+  }
 }

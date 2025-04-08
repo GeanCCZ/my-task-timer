@@ -41,14 +41,13 @@ export class UpdateUseCase
   }
 
   private async findUserOrFail(id: string) {
-    const { data: user, error: findError } = await tryCatch(
+    const { data, error } = await tryCatch(
       this.accountRepository.findOne(id),
       (error) => new InternalServerError('Failed to fetch user: ' + error)
     );
 
-    if (findError || !user)
-      throw new NotFoundException(`Account with id ${id} not found`);
+    if (error) throw new NotFoundException(`Account with id ${id} not found`);
 
-    return user;
+    return data;
   }
 }

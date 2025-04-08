@@ -25,9 +25,7 @@ import {
   ApiBadRequestResponse,
   ApiResponse,
 } from '@nestjs/swagger';
-
-import { CreateTaskDto } from 'packages/tasks/domain/src/lib/dtos/create.task.dto';
-import { UpdateTaskDto } from 'packages/tasks/domain/src/lib/dtos/update.task.dto';
+import { UpdateTaskDto, CreateTaskDto } from '@my-task-timer/tasks-domain';
 import { AccessTokenGuard } from '@my-task-timer/shared-resource';
 import { AuthenticatedRequest } from '@my-task-timer/shared-interfaces';
 

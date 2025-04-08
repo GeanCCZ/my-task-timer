@@ -1,15 +1,22 @@
 meta {
-  name: find all
+  name: create
   type: http
-  seq: 2
+  seq: 1
 }
 
-get {
-  url: http://localhost:3000/api/tasks
-  body: none
+post {
+  url: http://localhost:3000/api/time-logs
+  body: json
   auth: bearer
 }
 
 auth:bearer {
   token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiNjJjOGQ4MS1hOWM4LTQ5MGYtOWI3Yy0zNDI2ZjI5ZGMzZWYiLCJpYXQiOjE3NDQxNTI0NzMsImV4cCI6MTc0NDE1MzM3M30.FMz_DPapGfQik1dvC15WuK-BBHggxiwfdNEa-xum0sc
+}
+
+body:json {
+  {
+    "startedAt": "2025-12-23T00:00:00.000Z",
+    "taskId": "9612c0dd-f51a-4845-b972-f8940bd2c014"
+  }
 }

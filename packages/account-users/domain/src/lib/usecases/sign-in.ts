@@ -11,6 +11,7 @@ import {
   tryCatch,
   NotFoundException,
   InternalServerError,
+  UnauthorizedException,
 } from '@my-task-timer/shared-utils-errors';
 
 @Injectable()
@@ -31,24 +32,24 @@ export class SignInUseCase implements Usecase<SignInDto, AuthTokensDto> {
   }
 
   private async findUser(email?: string, username?: string) {
-    const { data: user, error: errorUser } = await tryCatch(
+    const { data, error } = await tryCatch(
       this.accountRepository.findByEmailOrUsername(email, username)
     );
 
-    if (errorUser || !user) {
+    if (error) {
       throw new NotFoundException('User not found');
     }
 
-    return user;
+    return data;
   }
 
   private async verifyPassword(plainPassword: string, hashedPassword: string) {
-    const { data: passwordMatch, error } = await tryCatch(
+    const { data, error } = await tryCatch(
       this.crypto.compare(plainPassword, hashedPassword)
     );
 
-    if (!passwordMatch || error) {
-      throw new NotFoundException('Password not match');
+    if (error || !data) {
+      throw new UnauthorizedException('Password does not match');
     }
   }
 
