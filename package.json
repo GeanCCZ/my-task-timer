@@ -11,7 +11,8 @@
     "db:migrate": "dotenv -e .env tsx ./packages/shared/data-source/src/lib/providers/migrate.provider.ts",
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
-    "db:drop": "drizzle-kit drop"
+    "db:drop": "drizzle-kit drop",
+    "dev:coverage": "nx run-many -t test --coverage"
   },
   "private": true,
   "devDependencies": {
