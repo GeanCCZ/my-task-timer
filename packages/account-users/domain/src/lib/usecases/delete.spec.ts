@@ -1,7 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DeleteUseCase } from './delete';
 import { AccountRepository } from '../repository/account.repository';
-import { NotFoundException, InternalServerError } from '@my-task-timer/shared-utils-errors';
+import {
+  NotFoundException,
+  InternalServerError,
+} from '@my-task-timer/shared-utils-errors';
 import { randomUUID } from 'crypto';
 
 describe('DeleteUseCase', () => {
@@ -37,37 +40,40 @@ describe('DeleteUseCase', () => {
 
   describe('execute', () => {
     it('should delete an account successfully', async () => {
-      // Arrange
       const userId = randomUUID();
       const successMessage = 'User removed successfully';
-      jest.spyOn(accountRepository, 'deleteOne').mockResolvedValueOnce(successMessage);
+      jest
+        .spyOn(accountRepository, 'deleteOne')
+        .mockResolvedValueOnce(successMessage);
 
-      // Act
       const result = await deleteUseCase.execute(userId);
 
-      // Assert
       expect(result).toBe(successMessage);
       expect(accountRepository.deleteOne).toHaveBeenCalledWith(userId);
       expect(accountRepository.deleteOne).toHaveBeenCalledTimes(1);
     });
 
     it('should throw NotFoundException when account does not exist', async () => {
-      // Arrange
       const userId = randomUUID();
-      jest.spyOn(accountRepository, 'deleteOne').mockRejectedValueOnce(new Error('Account with id 123 not found'));
+      jest
+        .spyOn(accountRepository, 'deleteOne')
+        .mockRejectedValueOnce(new Error('Account with id 123 not found'));
 
-      // Act & Assert
-      await expect(deleteUseCase.execute(userId)).rejects.toThrow(NotFoundException);
+      await expect(deleteUseCase.execute(userId)).rejects.toThrow(
+        NotFoundException
+      );
       expect(accountRepository.deleteOne).toHaveBeenCalledWith(userId);
     });
 
     it('should throw InternalServerError for unexpected errors', async () => {
-      // Arrange
       const userId = randomUUID();
-      jest.spyOn(accountRepository, 'deleteOne').mockRejectedValueOnce(new Error('Database connection failed'));
+      jest
+        .spyOn(accountRepository, 'deleteOne')
+        .mockRejectedValueOnce(new Error('Database connection failed'));
 
-      // Act & Assert
-      await expect(deleteUseCase.execute(userId)).rejects.toThrow(InternalServerError);
+      await expect(deleteUseCase.execute(userId)).rejects.toThrow(
+        InternalServerError
+      );
       expect(accountRepository.deleteOne).toHaveBeenCalledWith(userId);
     });
   });
