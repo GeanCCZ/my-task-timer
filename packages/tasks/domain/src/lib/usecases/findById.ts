@@ -1,22 +1,30 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { TaskRepository } from '../repository/task.repository';
 import { Usecase } from '@my-task-timer/shared-interfaces';
-import { Task } from '../entities/task.entity';
-import { ResponseTaskDto } from '../dtos/response.task.dto';
+import { ResponseTaskDto } from '../dtos';
 import { TaskMapper } from '../mappers/task.mapper';
+import {
+  InternalServerError,
+  tryCatch,
+} from '@my-task-timer/shared-utils-errors';
 
 @Injectable()
-export class FindTaskByIdUseCase implements Usecase<keyof Task, ResponseTaskDto> {
+export class FindTaskByIdUseCase implements Usecase<string, ResponseTaskDto> {
   constructor(
     @Inject('TaskMapper') private readonly taskMapper: TaskMapper,
-    private readonly taskRepository: TaskRepository,
-  ) { }
+    private readonly taskRepository: TaskRepository
+  ) {}
 
-  async execute(input: keyof Task): Promise<ResponseTaskDto> {
-    const task = await this.taskRepository.findOne(input);
-    if (!task) {
-      throw new NotFoundException('Task not found');
+  async execute(id: string): Promise<ResponseTaskDto> {
+    const { data, error } = await tryCatch(this.taskRepository.findOne(id));
+
+    if (error) {
+      throw error?.message.includes('not found')
+        ? new NotFoundException(`Task with id ${id} does not exist`)
+        : new InternalServerError(
+            'An unexpected error occurred while retrieving the task'
+          );
     }
-    return this.taskMapper.toResponse(task);
+    return this.taskMapper.toDto(data);
   }
 }

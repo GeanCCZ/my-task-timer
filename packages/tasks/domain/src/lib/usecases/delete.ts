@@ -1,15 +1,27 @@
 import { Usecase } from '@my-task-timer/shared-interfaces';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { TaskRepository } from '../repository/task.repository';
-import { TaskMapper } from '@my-task-timer/tasks-domain';
-import { Task } from '../entities/task.entity';
+import {
+  InternalServerError,
+  NotFoundException,
+  tryCatch,
+} from '@my-task-timer/shared-utils-errors';
 
 @Injectable()
-export class DeleteTaskUseCase implements Usecase<keyof Task, void> {
+export class DeleteTaskUseCase implements Usecase<string, string> {
   constructor(private readonly taskRepository: TaskRepository) {}
 
-  async execute(input: keyof Task) {
-    await this.taskRepository.deleteOne(input);
-    return;
+  async execute(id: string): Promise<string> {
+    const { data, error } = await tryCatch(this.taskRepository.deleteOne(id));
+
+    if (error) {
+      throw error?.message.includes('not found')
+        ? new NotFoundException(`Task with id ${id} does not exist`)
+        : new InternalServerError(
+            'An unexpected error occurred while deleting the task'
+          );
+    }
+
+    return data;
   }
 }

@@ -1,61 +1,82 @@
 import { Usecase } from '@my-task-timer/shared-interfaces';
 import { Injectable } from '@nestjs/common';
-import { ResponseTimeLogDto } from '../dtos/response.timeLog.dto';
-import { TimeLog } from '../entities/timeLog.entity';
-import { TimeLogRepository } from '../repository/timeLog.repository';
-import { TimeLogMapper } from '../mappers/timeLog.mapper';
-import { UpdateTimeLogDto } from '../dtos/update.timeLog';
-import { FindTimeLogByIdUseCase } from './findById';
+import { ResponseTimeLogDto, UpdateTimeLogDto } from '../dtos';
+import { TimeLog } from '../entities/time-log.entity';
+import { TimeLogRepository } from '../repository/time-log.repository';
+import { TimeLogMapper } from '../mappers/time-log.mapper';
+import {
+  calculateTimeDifference,
+  convertToTimeZone,
+  InternalServerError,
+  NotFoundException,
+  tryCatch,
+} from '@my-task-timer/shared-utils-errors';
 
 @Injectable()
 export class UpdateTimeLogUseCase
-  implements Usecase<UpdateTimeLogDto, ResponseTimeLogDto>
+  implements
+    Usecase<{ id: string; input: UpdateTimeLogDto }, ResponseTimeLogDto>
 {
   constructor(
     private readonly timeLogRepository: TimeLogRepository,
-    private readonly findTimeLogByIdUseCase: FindTimeLogByIdUseCase,
     private readonly timeLogMapper: TimeLogMapper
   ) {}
 
-  async execute(input: UpdateTimeLogDto): Promise<ResponseTimeLogDto> {
-    const findedTimeLog = await this.findTimeLogByIdUseCase.execute(
-      input.id as keyof TimeLog
+  async execute({
+    id,
+    input,
+  }: {
+    id: string;
+    input: UpdateTimeLogDto;
+  }): Promise<ResponseTimeLogDto> {
+    const { data: existingTimeLog, error: findError } = await tryCatch(
+      this.timeLogRepository.findOne(id)
     );
-
-    const timeLogDomain: TimeLog = {
-      ...this.timeLogMapper.toEntity(input),
-      id: input.id,
-      startedAt: new Date(input.startedAt),
-    };
-
-    if (input.endedAt && findedTimeLog.endedAt !== input.endedAt) {
-      timeLogDomain.endedAt = new Date(
-        new Date(input.endedAt).toLocaleString('en-US', {
-          timeZone: 'America/Sao_Paulo',
-        })
-      );
-
-      const timeDiff =
-        timeLogDomain.endedAt.getTime() - findedTimeLog.startedAt.getTime();
-      const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-      const timeSpent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-      timeLogDomain.timeSpent = timeSpent;
+    if (findError || !existingTimeLog) {
+      throw new NotFoundException(`TimeLog with id ${id} not found`);
     }
 
-    const updatedTimeLog = await this.timeLogRepository.updateOne(
-      findedTimeLog.id as keyof TimeLog,
-      {
-        ...findedTimeLog,
-        ...timeLogDomain,
-      }
-    );
+    // Mapeia os dados de atualização do DTO para o domínio
+    const updateData = this.timeLogMapper.toEntity(input);
+    const updatedData: Partial<TimeLog> = {
+      ...existingTimeLog,
+      ...updateData,
+      id, // Garantindo que o id seja mantido
+    };
 
-    return this.timeLogMapper.toResponse(updatedTimeLog);
+    // Converte o startedAt para o fuso horário, se fornecido
+    if (input.startedAt) {
+      updatedData.startedAt = convertToTimeZone(
+        input.startedAt,
+        'America/Sao_Paulo'
+      );
+    }
+
+    // Se endedAt for informado e for diferente, atualiza e calcula o tempo decorrido
+    if (input.endedAt && input.endedAt !== existingTimeLog.endedAt) {
+      const convertedEndedAt = convertToTimeZone(
+        input.endedAt,
+        'America/Sao_Paulo'
+      );
+      updatedData.endedAt = convertedEndedAt;
+
+      // Calcula a diferença de tempo a partir do startedAt existente
+      const startTime = updatedData.startedAt
+        ? updatedData.startedAt
+        : new Date(existingTimeLog.startedAt);
+      const timeDiffInMs =
+        convertedEndedAt.getTime() - new Date(startTime).getTime();
+      updatedData.timeSpent = calculateTimeDifference(timeDiffInMs);
+    }
+
+    // Persiste a atualização
+    const { data: updatedTimeLog, error: updateError } = await tryCatch(
+      this.timeLogRepository.updateOne(id, updatedData as TimeLog)
+    );
+    if (updateError || !updatedTimeLog) {
+      throw new InternalServerError('Failed to update TimeLog');
+    }
+
+    return this.timeLogMapper.toDto(updatedTimeLog);
   }
 }

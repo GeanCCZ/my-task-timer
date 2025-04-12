@@ -63,7 +63,7 @@ export class AccountRepositoryImpl implements AccountRepository {
     }) as Promise<Account>;
   }
 
-  async deleteOne(id: string): Promise<string> {
+  async deleteOne(id: string) {
     await this.db.delete(schema.users).where(eq(schema.users.id, id)).execute();
     return 'User removed successfully';
   }

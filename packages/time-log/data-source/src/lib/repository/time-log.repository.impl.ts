@@ -11,41 +11,40 @@ export class TimeLogRepositoryImpl implements TimeLogRepository {
 
   async createOne(input: TimeLog): Promise<TimeLog> {
     const { id, ...insertData } = input;
-    const [createTimeLog]: any[] = await this.db
+    const [createTimeLog]: TimeLog[] = await this.db
       .insert(schema.timeLogs)
-      .values([insertData] as any)
+      .values([insertData])
       .returning();
     return createTimeLog;
   }
 
-  async updateOne(timeLogId: keyof TimeLog, input: TimeLog): Promise<TimeLog> {
-    const { id, ...updateData } = input;
-    const [updateTimeLog]: any[] = await this.db
+  async updateOne(id: string, input: TimeLog): Promise<TimeLog> {
+    const [updateTimeLog] = await this.db
       .update(schema.timeLogs)
-      .set(updateData as any)
+      .set(input)
       .where(eq(schema.timeLogs.id, id))
       .returning();
+
     return updateTimeLog;
   }
 
-  async deleteOne(id: keyof TimeLog) {
-    const [deleteTimeLog]: any = await this.db
+  async deleteOne(id: string) {
+    await this.db
       .delete(schema.timeLogs)
       .where(eq(schema.timeLogs.id, id))
-      .returning();
-    return deleteTimeLog;
+      .execute();
+    return 'Time removed successfully.';
   }
 
-  async findOne(id: keyof TimeLog) {
-    const [findOneTimeLog]: any = await this.db
+  async findOne(id: keyof TimeLog): Promise<TimeLog> {
+    const [findOneTimeLog] = await this.db
       .select()
       .from(schema.timeLogs)
       .where(eq(schema.timeLogs.id, id));
     return findOneTimeLog;
   }
 
-  async findAll() {
-    const timeLogs: any = await this.db.select().from(schema.timeLogs);
-    return timeLogs.map((timeLog: any) => timeLog);
+  async findAll(): Promise<TimeLog[]> {
+    return this.db.select().from(schema.timeLogs);
   }
 }
