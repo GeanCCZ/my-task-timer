@@ -8,7 +8,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { GlobalExceptionFilter } from '@my-task-timer/shared-utils-errors';
-import { TransformResponseInterceptor } from '@my-task-timer/shared-utils-interceptors';
+import { HttpRequestLoggerInterceptor, TransformResponseInterceptor } from '@my-task-timer/shared-utils-interceptors';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -31,7 +31,7 @@ async function bootstrap() {
     },
   });
 
-  app.useGlobalInterceptors(new TransformResponseInterceptor());
+  app.useGlobalInterceptors(new TransformResponseInterceptor(), new HttpRequestLoggerInterceptor());
   app.useGlobalFilters(new GlobalExceptionFilter());
   const port = process.env.PORT || 3000;
   await app.listen(port);
