@@ -1,4 +1,4 @@
-![Logo](https://6t7sm2897i.ufs.sh/f/VCIgGDrhiGZSi594F93QKrVom0xsetjZJWXPNAbfFqz826c3)
+<div align="center"> <img src="https://6t7sm2897i.ufs.sh/f/VCIgGDrhiGZSi594F93QKrVom0xsetjZJWXPNAbfFqz826c3" alt="Logo" width="300"/> </div>
 
 Um sistema para organização e acompanhamento de tarefas utilizando um **kanban**, **timer**, **calendário mensal** e um **gráfico de atividades** no estilo do GitHub.
 
@@ -6,14 +6,13 @@ Um sistema para organização e acompanhamento de tarefas utilizando um **kanban
 
 ## Tecnologias
 
-- **Monorepo:** [Nx](https://nx.dev/)
-- **Frontend:** Angular
-- **Backend:** NestJS
-- **Banco de Dados:** PostgreSQL
-- **Cache:** Redis
-- **Containerização:** Docker
-- **ORM:** [Prisma](https://www.prisma.io/) ou DrizzleORM (a definir)
-
+- ![Nx](https://img.shields.io/badge/Monorepo-Nx-143055?logo=nx&logoColor=white) [Nx](https://nx.dev/)
+- ![Angular](https://img.shields.io/badge/Frontend-Angular-DD0031?logo=angular&logoColor=white) Angular
+- ![NestJS](https://img.shields.io/badge/Backend-NestJS-E0234E?logo=nestjs&logoColor=white) NestJS
+- ![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791?logo=postgresql&logoColor=white) PostgreSQL
+- ![Redis](https://img.shields.io/badge/Cache-Redis-DC382D?logo=redis&logoColor=white) Redis
+- ![Docker](https://img.shields.io/badge/Container-Docker-2496ED?logo=docker&logoColor=white) Docker
+- ![DrizzleORM](https://img.shields.io/badge/ORM-DrizzleORM-000000?logo=data:image/svg+xml;base64,[INSERIR-LOGO-BASE64]) DrizzleORM
 ---
 
 ## Autenticação
@@ -77,52 +76,9 @@ A autenticação será baseada em **JWT (JSON Web Token)**, com suporte para:
 
 ---
 
-## Modelo de Dados (Entities)
-
-### **Usuário (AccountUser)**
-
-```typescript
-ACCOUNT-USER {
-  id: string;
-  email: string
-  username: string;
-  password: string;
-  tasks: Task[];
-}
-```
-
-### **Tarefa (Task)**
-
-```typescript
-TASK {
-  id: string;
-  title: string;
-  status: StatusType;
-  dueDate: Date;
-  createdAt: Date;
-  updatedAt: Date;
-  totalTimeSpent: string;
-  timeLogs: TimeLog[];
-}
-```
-
-### **Registro de tempo (TimeLog)**
-
-```typescript
-TimeLog {
-  id: string;
-  startedAt: Date;
-  endedAt: Date;
-  timeSpent: number;
-  taskId: strinh;
-}
-```
-
----
-
 ## API Endpoints
 
-### **Autenticação** (`/auth`)
+### **Autenticação** (`/auth`)(✅)
 
 | Método | Endpoint         | Descrição                      | Autenticação |
 | ------ | ---------------- | ------------------------------ | ------------ |
@@ -133,7 +89,7 @@ TimeLog {
 
 ---
 
-### **Tarefas** (`/tasks`)
+### **Tarefas** (`/tasks`)(✅)
 
 | Método   | Endpoint     | Descrição                          | Autenticação |
 | -------- | ------------ | ---------------------------------- | ------------ |
@@ -145,7 +101,7 @@ TimeLog {
 
 ---
 
-### **Timer** (`/tasks/:id/timer`)
+### **Timer** (`/tasks/:id/timer`)(✅)
 
 | Método | Endpoint                 | Descrição       | Autenticação |
 | ------ | ------------------------ | --------------- | ------------ |
@@ -154,20 +110,9 @@ TimeLog {
 
 ---
 
-### **Relatórios & Visualização** (`/reports`)
+### **Relatórios & Visualização** (`/reports`)()
 
 | Método | Endpoint            | Descrição                                  | Autenticação |
 | ------ | ------------------- | ------------------------------------------ | ------------ |
 | `GET`  | `/reports/calendar` | Retorna as tarefas organizadas por mês     | ✅           |
 | `GET`  | `/reports/activity` | Retorna o gráfico de atividades do usuário | ✅           |
-
-## Próximos Passos
-
-- [x] Definir entre **Prisma** ou **DrizzleORM**.
-- [x] Refatorar a tabela de tasks
-- [ ] Ver a necessidade de migrations serem chamadas toda vez que o app roda
-- [ ] Implementar **Autenticação JWT** com Refresh Token no Redis.
-- [x] Implementar **Task**
-- [ ] Testes unitários
-- [x] Estruturar **módulos e serviços** no NestJS.
-- [ ] Criar protótipos da interface em Angular.
