@@ -1,33 +1,45 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Usecase } from '@my-task-timer/shared-interfaces';
-import { Task, ResponseTaskDto, CreateTaskDto, TaskRepository, TaskMapper } from '@my-task-timer/tasks-domain';
+import { Task } from '../entities/task.entity';
+import { ResponseTaskDto, CreateTaskDto } from '../dtos';
+import { TaskMapper } from '../mappers/task.mapper';
+import { TaskRepository } from '../repository/task.repository';
+import {
+  InternalServerError,
+  tryCatch,
+} from '@my-task-timer/shared-utils-errors';
 
 @Injectable()
 export class CreateTaskUseCase
-  implements Usecase<CreateTaskDto, ResponseTaskDto> {
+  implements Usecase<{ userId: string; input: CreateTaskDto }, ResponseTaskDto>
+{
   constructor(
     @Inject('TaskMapper') private readonly taskMapper: TaskMapper,
-    private readonly taskRepository: TaskRepository,
-  ) { }
+    private readonly taskRepository: TaskRepository
+  ) {}
 
-
-  async execute(input: CreateTaskDto): Promise<ResponseTaskDto> {
-
-    const taskDomain: Task = this.taskMapper.toEntity(input) as unknown as Task;
-
-    taskDomain.userId = input.user.id!;
-
-    taskDomain.status = 'TODO';
-    taskDomain.totalTimeSpent = '0';
-
-    taskDomain.updatedAt = new Date(
-      new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' })
-    );
-    taskDomain.createdAt = new Date(
-      new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' })
+  async execute({
+    userId,
+    input,
+  }: {
+    userId: string;
+    input: CreateTaskDto;
+  }): Promise<ResponseTaskDto> {
+    const taskDomain = this.createTaskDomain(userId, input);
+    const { data: createdTask, error } = await tryCatch(
+      this.taskRepository.createOne(taskDomain)
     );
 
-    const createdTask = await this.taskRepository.createOne(taskDomain as Task);
-    return this.taskMapper.toResponse(createdTask);
+    if (error) throw new InternalServerError('Task creation failed');
+
+    return this.taskMapper.toDto(createdTask);
+  }
+
+  private createTaskDomain(userId: string, input: CreateTaskDto) {
+    const mappedEntity = this.taskMapper.toEntity(input);
+    return {
+      ...mappedEntity,
+      userId,
+    } as Task;
   }
 }

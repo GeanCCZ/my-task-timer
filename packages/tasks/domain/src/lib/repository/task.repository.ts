@@ -1,32 +1,29 @@
 import {
   Create,
   Delete,
-  FindAll,
+  FindAllById,
   FindOne,
   Update,
 } from '@my-task-timer/shared-interfaces';
 import { Task } from '../entities/task.entity';
-import { ResponseTaskDto } from '../dtos/response.task.dto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export abstract class TaskRepository
   implements
-  Create<Task, Task>,
-  Update<Task, keyof Task, Task>,
-  FindOne<Task, keyof Task, Task>,
-  FindAll<Task>,
-  Delete<Task, keyof Task, void> {
-  abstract createOne(input: Task): Promise<ResponseTaskDto>;
+    Create<Task, Task>,
+    Update<Task, 'id', Task>,
+    FindOne<Task, 'id', Task>,
+    FindAllById<Task, 'userId', Task>,
+    Delete<Task, 'id', string>
+{
+  abstract createOne(input: Task): Promise<Task>;
 
-  abstract updateOne(
-    id: keyof Task,
-    input: Task
-  ): Promise<Task>;
+  abstract updateOne(id: string, input: Task): Promise<Task>;
 
-  abstract deleteOne(id: keyof Task): Promise<void>;
+  abstract deleteOne(id: string): Promise<string>;
 
-  abstract findOne(id: keyof Task): Promise<ResponseTaskDto>;
+  abstract findOne(id: string): Promise<Task>;
 
-  abstract findAll(): Promise<ResponseTaskDto[]>;
+  abstract findAllById(userId: string): Promise<Task[]>;
 }

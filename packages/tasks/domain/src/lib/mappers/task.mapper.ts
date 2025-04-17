@@ -1,32 +1,42 @@
-import { Mapper } from '@my-task-timer/shared-interfaces';
-import { instanceToPlain, plainToInstance } from 'class-transformer';
-import { UpdateTaskDto, ResponseTaskDto, Task, CreateTaskDto } from '@my-task-timer/tasks-domain';
+import { Mapper, STATUS } from '@my-task-timer/shared-interfaces';
+import { UpdateTaskDto, ResponseTaskDto, CreateTaskDto } from '../dtos';
+import { Task } from '../entities/task.entity';
 
-export class TaskMapper implements Mapper<CreateTaskDto, any> {
-  toEntity(input: CreateTaskDto | UpdateTaskDto) {
-    if (input instanceof UpdateTaskDto) {
-      return {
-        id: input.id,
-        title: input.title,
-        dueDate: input.dueDate,
-      };
+export class TaskMapper
+  implements
+    Mapper<CreateTaskDto | UpdateTaskDto | ResponseTaskDto, Partial<Task>>
+{
+  toEntity(
+    input: CreateTaskDto | UpdateTaskDto,
+    isUpdate = false
+  ): Partial<Task> {
+    const entity: Partial<Task> = {};
+
+    if (isUpdate) {
+      if (input.title !== undefined) entity.title = input.title;
+      if (input.dueDate !== undefined) entity.dueDate = input.dueDate;
+      // IMPORTANTE: não definimos um status padrão na atualização
+      if ((input as UpdateTaskDto).status !== undefined) {
+        entity.status = (input as UpdateTaskDto).status;
+      }
+      entity.updatedAt = new Date();
+    } else {
+      entity.title = input.title;
+      entity.dueDate = input.dueDate;
+      entity.status = STATUS.TODO;
+      entity.createdAt = new Date();
+      entity.updatedAt = new Date();
     }
-    return {
-      title: input.title,
-      dueDate: input.dueDate,
-    };
+
+    return entity;
   }
 
-  toDto(domain: Task): CreateTaskDto {
-    return {
-      title: domain.title,
-      dueDate: domain.dueDate,
-      user: domain.user!,
-    };
-  }
-
-  toResponse(domain: Task): ResponseTaskDto {
-    const taskInstance = plainToInstance(CreateTaskDto, domain);
-    return instanceToPlain(taskInstance) as ResponseTaskDto;
+  toDto(domain: Task): ResponseTaskDto {
+    const dto = new ResponseTaskDto();
+    dto.id = domain.id;
+    dto.title = domain.title;
+    dto.status = domain.status;
+    dto.dueDate = domain.dueDate;
+    return dto;
   }
 }
