@@ -1,20 +1,29 @@
-import { Injectable } from "@nestjs/common";
-import { TimeLogRepository } from "../repository/timeLog.repository";
-import { TimeLogMapper } from "../mappers/timeLog.mapper";
-import { Usecase } from "@my-task-timer/shared-interfaces";
-import { TimeLog } from "../entities/timeLog.entity";
+import { Injectable } from '@nestjs/common';
+import { TimeLogRepository } from '../repository/time-log.repository';
+import { Usecase } from '@my-task-timer/shared-interfaces';
+import {
+  InternalServerError,
+  NotFoundException,
+  tryCatch,
+} from '@my-task-timer/shared-utils-errors';
 
 @Injectable()
-export class DeleteTimeLogUseCase implements Usecase<keyof TimeLog, void> {
+export class DeleteTimeLogUseCase implements Usecase<string, string> {
+  constructor(private readonly timeLogRepository: TimeLogRepository) {}
 
-    constructor(
-        private readonly timeLogRepository: TimeLogRepository,
-        private readonly timeLogMapper: TimeLogMapper
-    ) { }
+  async execute(id: string): Promise<string> {
+    const { data, error } = await tryCatch(
+      this.timeLogRepository.deleteOne(id)
+    );
 
-    async execute(input: keyof TimeLog): Promise<void> {
-        await this.timeLogRepository.deleteOne(input);
-        return;
+    if (error) {
+      throw error?.message.includes('not found')
+        ? new NotFoundException(`Time log with id ${id} does not exist`)
+        : new InternalServerError(
+            'An unexpected error occurred while deleting the time log'
+          );
     }
 
+    return data;
+  }
 }

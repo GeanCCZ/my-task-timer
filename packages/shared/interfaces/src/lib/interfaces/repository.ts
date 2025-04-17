@@ -1,6 +1,7 @@
 export interface Create<I, O> {
   createOne(input: I): Promise<O>;
 }
+
 export interface Update<I, K extends keyof I, O> {
   updateOne(key: I[K], input: I): Promise<O>;
 }
@@ -15,4 +16,8 @@ export interface FindOne<I, K extends keyof I, O> {
 
 export interface FindAll<O> {
   findAll(): Promise<O[]>;
+}
+
+export interface FindAllById<I, K extends keyof I, O> {
+  findAllById(key: I[K]): Promise<O[]>;
 }

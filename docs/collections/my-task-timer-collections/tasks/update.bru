@@ -1,0 +1,21 @@
+meta {
+  name: update
+  type: http
+  seq: 4
+}
+
+patch {
+  url: http://localhost:3000/api/tasks/f436a0fc-c9d1-47f1-afde-8962bb1a0371
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiNjJjOGQ4MS1hOWM4LTQ5MGYtOWI3Yy0zNDI2ZjI5ZGMzZWYiLCJpYXQiOjE3NDM3OTEyOTksImV4cCI6MTc0Mzc5MjE5OX0.ggwvdFfuBtQLIPwBUCh_n0QtQy-7I5Fbv9mh7Q7JqDk
+}
+
+body:json {
+  {
+    "status": "DONE"
+  }
+}

@@ -1,1 +1,1 @@
-export * from './lib/repository/timeLog.respositoy.impl';
+export * from './lib/repository/time-log.repository.impl';

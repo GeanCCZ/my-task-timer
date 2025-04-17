@@ -33,6 +33,12 @@
       "@my-task-timer/shared-resource": [
         "packages/shared/resource/src/index.ts"
       ],
+      "@my-task-timer/shared-utils-errors": [
+        "packages/shared/utils/errors/src/index.ts"
+      ],
+      "@my-task-timer/shared-utils-interceptors": [
+        "packages/shared/utils/interceptors/src/index.ts"
+      ],
       "@my-task-timer/tasks-data-source": [
         "packages/tasks/data-source/src/index.ts"
       ],

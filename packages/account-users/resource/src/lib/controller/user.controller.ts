@@ -1,10 +1,8 @@
 import {
   Controller,
-  HttpCode,
   HttpStatus,
   Get,
   UseGuards,
-  Param,
   Req,
   UseInterceptors,
   ClassSerializerInterceptor,
@@ -20,7 +18,11 @@ import {
 } from '@my-task-timer/account-users-domain';
 import { AuthenticatedRequest } from '@my-task-timer/shared-interfaces';
 import { AccessTokenGuard } from '@my-task-timer/shared-resource';
-import { ApiBadGatewayResponse, ApiBadRequestResponse, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBadGatewayResponse,
+  ApiBadRequestResponse,
+  ApiResponse,
+} from '@nestjs/swagger';
 
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -29,11 +31,10 @@ export class UserController {
     private readonly findOneUseCase: FindOneUseCase,
     private readonly updateUseCase: UpdateUseCase,
     private readonly deleteUseCase: DeleteUseCase
-  ) { }
+  ) {}
 
   @UseGuards(AccessTokenGuard)
   @Get()
-  @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'User retrieved successfully',
