@@ -7,12 +7,12 @@ Um sistema para organização e acompanhamento de tarefas utilizando um **kanban
 ## Tecnologias
 
 - ![Nx](https://img.shields.io/badge/Monorepo-Nx-143055?logo=nx&logoColor=white) [Nx](https://nx.dev/)
-- ![Angular](https://img.shields.io/badge/Frontend-Angular-DD0031?logo=angular&logoColor=white) Angular
-- ![NestJS](https://img.shields.io/badge/Backend-NestJS-E0234E?logo=nestjs&logoColor=white) NestJS
-- ![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791?logo=postgresql&logoColor=white) PostgreSQL
-- ![Redis](https://img.shields.io/badge/Cache-Redis-DC382D?logo=redis&logoColor=white) Redis
-- ![Docker](https://img.shields.io/badge/Container-Docker-2496ED?logo=docker&logoColor=white) Docker
-- ![DrizzleORM](https://img.shields.io/badge/ORM-DrizzleORM-000000?logo=data:image/svg+xml;base64,[INSERIR-LOGO-BASE64]) DrizzleORM
+- ![Angular](https://img.shields.io/badge/Frontend-Angular-DD0031?logo=angular&logoColor=white)
+- ![NestJS](https://img.shields.io/badge/Backend-NestJS-E0234E?logo=nestjs&logoColor=white)
+- ![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791?logo=postgresql&logoColor=white) 
+- ![Redis](https://img.shields.io/badge/Cache-Redis-DC382D?logo=redis&logoColor=white) 
+- ![Docker](https://img.shields.io/badge/Container-Docker-2496ED?logo=docker&logoColor=white) 
+- ![DrizzleORM](https://img.shields.io/badge/ORM-DrizzleORM-000000?logo=data:image/svg+xml;base64,[INSERIR-LOGO-BASE64]) 
 ---
 
 ## Autenticação
