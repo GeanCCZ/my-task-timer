@@ -7,17 +7,15 @@ meta {
 post {
   url: http://localhost:3000/api/tasks
   body: json
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiNjJjOGQ4MS1hOWM4LTQ5MGYtOWI3Yy0zNDI2ZjI5ZGMzZWYiLCJpYXQiOjE3NDM2OTE2NDIsImV4cCI6MTc0MzY5MjU0Mn0.6uy-G5eEq18ehBEalfhR17ADvkza0zFObt52u3OjCDA
 }
 
 body:json {
   {
-    "user": {
-      "id": "821e949d-28dc-4047-a8c0-fc20576c4d6e",
-      "email": "oi01@gmail.com",
-      "username": "teste",
-      "password": "teste123456"
-    },
     "title": "tarefa01",
     "dueDate": "2025-12-23T00:00:00.000Z"
   }

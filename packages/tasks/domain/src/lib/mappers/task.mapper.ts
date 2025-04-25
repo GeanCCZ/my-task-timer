@@ -6,19 +6,28 @@ export class TaskMapper
   implements
     Mapper<CreateTaskDto | UpdateTaskDto | ResponseTaskDto, Partial<Task>>
 {
-  toEntity(input: CreateTaskDto | UpdateTaskDto): Partial<Task> {
+  toEntity(
+    input: CreateTaskDto | UpdateTaskDto,
+    isUpdate = false
+  ): Partial<Task> {
     const entity: Partial<Task> = {};
 
-    if (input instanceof CreateTaskDto) {
+    // Usamos um parâmetro explícito para indicar se é uma atualização
+    if (isUpdate) {
+      // É uma atualização
+      if (input.title !== undefined) entity.title = input.title;
+      if (input.dueDate !== undefined) entity.dueDate = input.dueDate;
+      // IMPORTANTE: não definimos um status padrão na atualização
+      if ((input as UpdateTaskDto).status !== undefined) {
+        entity.status = (input as UpdateTaskDto).status;
+      }
+      entity.updatedAt = new Date();
+    } else {
+      // É uma criação
       entity.title = input.title;
       entity.dueDate = input.dueDate;
       entity.status = STATUS.TODO;
       entity.createdAt = new Date();
-      entity.updatedAt = new Date();
-    } else {
-      if (input.title !== undefined) entity.title = input.title;
-      if (input.dueDate !== undefined) entity.dueDate = input.dueDate;
-      if (input.status !== undefined) entity.status = input.status;
       entity.updatedAt = new Date();
     }
 

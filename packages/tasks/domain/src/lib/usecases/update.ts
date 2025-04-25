@@ -35,16 +35,17 @@ export class UpdateTaskUseCase
       throw new NotFoundException(`Task with id ${id} not found`);
     }
 
-    const updateData = this.taskMapper.toEntity(input);
+    const updateData = this.taskMapper.toEntity(input, true);
 
-    const mergeTask = {
+    const mergedTask = {
       ...existingTask,
       ...updateData,
+      status: input.status !== undefined ? input.status : existingTask.status,
       updatedAt: new Date(),
     };
 
     const { data: updateTask, error: updateError } = await tryCatch(
-      this.taskRepository.updateOne(id, mergeTask)
+      this.taskRepository.updateOne(id, mergedTask)
     );
 
     if (updateError) {
